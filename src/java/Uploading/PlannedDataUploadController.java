@@ -38,6 +38,7 @@ public class PlannedDataUploadController {
         this.memoryUsage.printMemoryUsage();
 
         String filename = "plannedDataExcelFile.xlsx";
+        String filePath = this.basement.getBasementDirectory() + "/uploads/" + filename;
         if (file.isEmpty()) {
             model.addAttribute("uploadStatus", "Upload could not been completed");
             model.addAttribute("errorMessage", "არცერთი ფაილი არ იყო არჩეული");
@@ -47,44 +48,19 @@ public class PlannedDataUploadController {
             byte barr[] = file.getBytes();
 
             BufferedOutputStream bout = new BufferedOutputStream(
-                    new FileOutputStream(this.basement.getBasementDirectory() + "/uploads/" + filename));
+                    new FileOutputStream(filePath));
             bout.write(barr);
             bout.flush();
             bout.close();
-            /*
-            RouteFactory routeFactory = new RouteFactory();
 
-            TreeMap<Float, BasicRoute> basicRoutesFromUploadedFile = routeFactory.createBasicRoutesFromUploadedFile();
-
-            String lastUploadDeletionStatus = uploadDao.deleteLastUpload();
-            System.out.println("Last Upload Deletion Status:" + lastUploadDeletionStatus);
-            String lastUploadInsertionStatus = uploadDao.insertNewUpload(basicRoutesFromUploadedFile);
-            System.out.println("New Upload Insertion Status:" + lastUploadInsertionStatus);
-
-            Float insertionStatusCode = routeDao.insertUploadedData(basicRoutesFromUploadedFile, model);
-            if (insertionStatusCode == 0.00f) {
-                System.out.println("New data from excel file has been successfully uploaded into database");
-                //  model.addAttribute("unregisteredRoutesMessage", "lalalalalalalalal");
-            }
-            Instant end = Instant.now();
-            System.out.println("Uploading process Ended. Time needed:" + Duration.between(start, end));
-            System.out.print("Memory Usage after uploading: ");
-            mu.printMemoryUsage();
-            System.out.println("--------------------------------------------------");
-            if (insertionStatusCode > 0.00f) {
-                return "upload-success";
-            }
-
-            //  UploadInsertionThread uit = new UploadInsertionThread();
-            // uit.start();
-
-             */
         } catch (Exception e) {
             System.out.println(e);
             model.addAttribute("uploadStatus", "Upload could not been completed:" + e);
             return "upload";
         }
-
+        //--------------- Starting new Thread For Upload-----------------------
+        PlannedDataUploadThread plannedDataUploadThread = new PlannedDataUploadThread(filePath);
+        plannedDataUploadThread.start();
         return "uploadStatus";
     }
 }
