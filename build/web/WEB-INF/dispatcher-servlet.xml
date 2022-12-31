@@ -20,6 +20,7 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="Uploading"/>
     <context:component-scan base-package="Service"/>
+    <context:component-scan base-package="BasicModels"/>
     
     <!-- this part is for uploading-->
     <bean id="multipartResolver"   
