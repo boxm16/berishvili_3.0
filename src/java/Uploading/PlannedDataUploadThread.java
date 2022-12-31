@@ -26,6 +26,7 @@ public class PlannedDataUploadThread extends Thread {
 
         PlannedRouteFactory routeFactory = new PlannedRouteFactory();
         TreeMap<String, Route> routesFromExcelFile = routeFactory.getRoutesFromExcelFile(this.filePath);
+       
         for (Map.Entry<String, Route> routeEntry : routesFromExcelFile.entrySet()) {
 
             Route route = routeEntry.getValue();

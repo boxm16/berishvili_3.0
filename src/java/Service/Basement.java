@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 public class Basement {
 
     public String getBasementDirectory() {
-        // String rootDirectory = new File("").getAbsolutePath();
         if (getApplicationHostName().equals("LAPTOP")) {
             return "C:\\Users\\Michail Sitmalidis\\berishvili_3.0";
         } else if (getApplicationHostName().equals("DESKTOP-O61QDDT")) {
@@ -24,8 +23,6 @@ public class Basement {
         try {
             ip = InetAddress.getLocalHost();
             hostname = ip.getHostName();
-            // System.out.println("Your current IP address : " + ip);
-            //System.out.println("Your current Hostname : " + hostname);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }

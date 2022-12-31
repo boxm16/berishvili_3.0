@@ -10,6 +10,8 @@
 
     <body>
         <a href="goForPlannedDataUpload.htm">დაგეგმილი მონაცემების ატვირთვა</a>
+        <hr>
+        <a href="techMan.htm">TechMan</a>
 
     </body>
 </html>
