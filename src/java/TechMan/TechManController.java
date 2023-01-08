@@ -63,9 +63,15 @@ public class TechManController {
     @RequestMapping(value = "/createDatabaseTables", method = RequestMethod.GET)
     public String createDatabaseTables(ModelMap model) {
         String routeTableCreationStatus = techManDao.createRouteTable();
+        String plannedTripVoucherTableCreationStatus = techManDao.createPlannedTripVoucherTable();
+        String plannedTripPeriodTableCreationStatus = techManDao.createPlannedTripPeriodTable();
+
         String tripVoucherTableCreationStatus = techManDao.createTripVoucherTable();
         String tripPeriodTableCreationStatus = techManDao.createTripPeriodTable();
-        model.addAttribute("databaseTablesCreationStatus", routeTableCreationStatus
+        model.addAttribute("databaseTablesCreationStatus",
+                routeTableCreationStatus
+                + "<br>" + plannedTripVoucherTableCreationStatus
+                + "<br>" + plannedTripPeriodTableCreationStatus
                 + "<br>" + tripVoucherTableCreationStatus
                 + "<br>" + tripPeriodTableCreationStatus);
 
@@ -75,12 +81,17 @@ public class TechManController {
     @RequestMapping(value = "deleteDatabaseTables", method = RequestMethod.GET)
     public String deleteTables(ModelMap model) {
         //sequence is important (i think :) )
+        String plannedTripPeriodTableDeletionStatus = techManDao.deletePlannedTripPeriodTable();
+        String plannedTripVoucherTableDeletionStatus = techManDao.deletePlannedTripVoucherTable();
 
         String tripPeriodTableDeletionStatus = techManDao.deleteTripPeriodTable();
         String tripVoucherTableDeletionStatus = techManDao.deleteTripVoucherTable();
         String routeTableDeletionStatus = techManDao.deleteRouteTable();
 
-        model.addAttribute("databaseTablesDeletionStatus", routeTableDeletionStatus
+        model.addAttribute("databaseTablesDeletionStatus",
+                routeTableDeletionStatus
+                + "<br>" + plannedTripPeriodTableDeletionStatus
+                + "<br>" + plannedTripVoucherTableDeletionStatus
                 + "<br>" + tripVoucherTableDeletionStatus
                 + "<br>" + tripPeriodTableDeletionStatus);
 

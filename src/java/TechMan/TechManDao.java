@@ -35,7 +35,6 @@ public class TechManDao {
 
     public String createRouteTable() {
         String sql = "CREATE TABLE `route` ("
-                + "`index` VARCHAR(3) NOT NULL, "
                 + "`number` VARCHAR(10) NOT NULL, "
                 + "`a_point` VARCHAR(100) NULL, "
                 + "`b_point` VARCHAR(100) NULL, "
@@ -60,6 +59,102 @@ public class TechManDao {
         }
     }
 
+    String createPlannedTripVoucherTable() {
+        String sql = "CREATE TABLE `planned_trip_voucher` ("
+                + "`number` VARCHAR(20) NOT NULL, "
+                + "`route_number` VARCHAR(10) NOT NULL, "
+                + "`date_stamp` DATE NOT NULL, "
+                + "`base_number` INT(2) NOT NULL, "
+                + "`exodus_number` INT(2) NOT NULL, "
+                + "`driver_number` VARCHAR(10) NULL, "
+                + "`driver_name` VARCHAR(45) NULL, "
+                + "`bus_number` VARCHAR(15) NULL, "
+                + "`bus_type` VARCHAR(35) NULL, "
+                + "`base_leaving_time` TIME(0) NULL  DEFAULT NULL, "
+                + "`base_return_time` TIME(0) NULL  DEFAULT NULL, "
+                + "PRIMARY KEY (`number`), "
+                + "CONSTRAINT `route_number` "
+                + "FOREIGN KEY (`route_number`) "
+                + "REFERENCES `route` (`number`) "
+                + "ON DELETE CASCADE "
+                + "ON UPDATE NO ACTION) "
+                + "ENGINE = InnoDB "
+                + "DEFAULT CHARACTER SET = utf8;";
+
+        try {
+            connection = dataBaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            statement.close();
+            connection.close();
+            return "Table 'planned_trip_voucher' created successfully";
+        } catch (SQLException ex) {
+            if (ex.getSQLState().equals("42S01")) {
+                return "Table 'planned_trip_voucher' already exists";
+            } else {
+                Logger.getLogger(TechManDao.class.getName()).log(Level.SEVERE, null, ex);
+                return ex.getMessage();
+            }
+        }
+    }
+
+    String createPlannedTripPeriodTable() {
+        String sql = "CREATE TABLE `planned_trip_period` ("
+                + "`trip_voucher_number` VARCHAR(20) NOT NULL, "
+                + "`type` VARCHAR(15) NOT NULL, "
+                + "`start_time` TIME(0) NULL  DEFAULT NULL, "
+                + "`arrival_time` TIME(0) NULL  DEFAULT NULL, "
+                + "CONSTRAINT `planned_trip_voucher` "
+                + "FOREIGN KEY (`trip_voucher_number`) "
+                + "REFERENCES `planned_trip_voucher` (`number`) "
+                + "ON DELETE CASCADE "
+                + "ON UPDATE NO ACTION) "
+                + "ENGINE = InnoDB "
+                + "DEFAULT CHARACTER SET = utf8";
+
+        try {
+            connection = dataBaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            statement.close();
+            connection.close();
+            return "Table 'planned_trip_period' created successfully";
+        } catch (SQLException ex) {
+            if (ex.getSQLState().equals("42S01")) {
+                return "Table 'planned_trip_period' already exists";
+            } else {
+                Logger.getLogger(TechManDao.class.getName()).log(Level.SEVERE, null, ex);
+                return ex.getMessage();
+            }
+        }
+    }
+
+    String deletePlannedTripPeriodTable() {
+        try {
+            connection = dataBaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            String sql = "DROP TABLE planned_trip_period";
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            Logger.getLogger(TechManDao.class.getName()).log(Level.SEVERE, null, e);
+            return e.getMessage();
+        }
+        return "Table planned_trip_period deleted successfully";
+    }
+
+    String deletePlannedTripVoucherTable() {
+        try {
+            connection = dataBaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            String sql = "DROP TABLE planned_trip_voucher";
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            Logger.getLogger(TechManDao.class.getName()).log(Level.SEVERE, null, e);
+            return e.getMessage();
+        }
+        return "Table planned_trip_voucherd deleted successfully";
+    }
+
     public String createTripVoucherTable() {
         String sql = "CREATE TABLE `trip_voucher` ("
                 + "`number` VARCHAR(20) NOT NULL, "
@@ -79,7 +174,7 @@ public class TechManDao {
                 + "`base_return_time_redacted` TIME(0) NULL  DEFAULT NULL, "
                 + "`notes` VARCHAR(2000) NULL, "
                 + "PRIMARY KEY (`number`), "
-                + "CONSTRAINT `route_number` "
+                + "CONSTRAINT `route_number_2` "
                 + "FOREIGN KEY (`route_number`) "
                 + "REFERENCES `route` (`number`) "
                 + "ON DELETE CASCADE "
@@ -146,7 +241,7 @@ public class TechManDao {
             String sql = "DROP TABLE route";
             statement.executeUpdate(sql);
         } catch (SQLException e) {
-           Logger.getLogger(TechManDao.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TechManDao.class.getName()).log(Level.SEVERE, null, e);
             return e.getMessage();
         }
         return "Table route deleted successfully";
@@ -177,4 +272,5 @@ public class TechManDao {
         }
         return "Table trip_period deleted successfully";
     }
+
 }

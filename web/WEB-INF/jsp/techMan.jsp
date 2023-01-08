@@ -25,10 +25,12 @@
             <br>
             ${databaseSchemaCreationStatus}
             <br>
+            <hr>
+            <hr>
             <a href="createDatabaseTables.htm">Create  Database Tables</a>
             <br>
             ${databaseTablesCreationStatus}
-            <hr>
+ <br>
             <a href="deleteDatabaseTables.htm">Delete  Database Tables</a>
             <br>
             ${databaseTablesDeletionStatus}

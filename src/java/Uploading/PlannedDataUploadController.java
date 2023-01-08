@@ -22,7 +22,7 @@ public class PlannedDataUploadController {
     private MemoryUsage memoryUsage;
 
     @RequestMapping(value = "goForPlannedDataUpload")
-    public String intervalsInitialRequest(ModelMap model) {
+    public String goForPlannedDataUpload(ModelMap model) {
         model.addAttribute("uploadTitle", "დაგეგმილი მონაცემების ატვირთვა");
         model.addAttribute("uploadTarget", "uploadPlannedData.htm");
         return "upload";

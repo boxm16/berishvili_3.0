@@ -1,13 +1,9 @@
 package Uploading;
 
-import BasicModels.Day;
-import BasicModels.Exodus;
 import BasicModels.Route;
-import BasicModels.TripPeriod;
-import BasicModels.TripVoucher;
+import Route.RouteDao;
 import Service.StaticsDispatcher;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,39 +19,52 @@ public class PlannedDataUploadThread extends Thread {
     public void run() {
 
         StaticsDispatcher.setUploading(true);
+        String uploadingProgressMessage = "Upload Progress ";
+        StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
+
+        RouteDao routeDao = new RouteDao();
+        TreeMap<String, Route> routesDataFromDB = routeDao.getRoutesDataFromDB();
+        uploadingProgressMessage += "<br> Getting routes data from database : DONE";
+        StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
 
         PlannedRouteFactory routeFactory = new PlannedRouteFactory();
         TreeMap<String, Route> routesFromExcelFile = routeFactory.getRoutesFromExcelFile(this.filePath);
-       
-        for (Map.Entry<String, Route> routeEntry : routesFromExcelFile.entrySet()) {
+        uploadingProgressMessage += "<br> Getting routes data from excel File : DONE";
+        StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
 
-            Route route = routeEntry.getValue();
-            TreeMap<Date, Day> days = route.getDays();
-            System.out.println("Route:"+route.getNumber());
-            for (Map.Entry<Date, Day> dayEntry : days.entrySet()) {
-                Day day = dayEntry.getValue();
-                TreeMap<Short, Exodus> exoduses = day.getExoduses();
-                System.out.println("Date"+day.getDate());
-                for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
-                    Exodus exodus = exodusEntry.getValue();
-                    TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
-                    System.out.println("Exodus Number" + exodus.getNumber());
-                    for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {
-                        TripVoucher tripVoucher = tripVoucherEntry.getValue();
-                        ArrayList<TripPeriod> tripPeriods = tripVoucher.getTripPeriods();
-                        System.out.println("TripVoucherNumber" + tripVoucher.getNumber());
-                        for (TripPeriod tripPeriod : tripPeriods) {
-                            System.out.println(tripPeriod.getStartTimeScheduled());
-                        }
-                        System.out.println("------------------------");
-                    }
-                    System.out.println("++++++++++++++++++++++++++");
-                }
-                 System.out.println("=========================");
+        // Here i check if in excel file there are new, unregistered in DB routes
+        //and parrallely i take route data from database and adding this data to route from excel file
+        ArrayList<String> unregisteredRoutes = new ArrayList<>();
+        for (Map.Entry<String, Route> routesFromExcelFileEntry : routesFromExcelFile.entrySet()) {
+            Route routeFromExcelFile = routesFromExcelFileEntry.getValue();
+            String routeNumberFromExcelFile = routesFromExcelFileEntry.getKey();
+            Route routeFromDatabase = routesDataFromDB.get(routeNumberFromExcelFile);
+            if (routeFromDatabase == null) {
+                unregisteredRoutes.add(routeNumberFromExcelFile);
+            } else {
+                routeFromExcelFile.setScheme(routeFromDatabase.getScheme());
+                routeFromExcelFile.setaPoint(routeFromDatabase.getaPoint());
+                routeFromExcelFile.setbPoint(routeFromDatabase.getbPoint());
             }
-              System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
+        if (unregisteredRoutes.size() > 0) {
+            System.out.println("-----------");
+            uploadingProgressMessage += "<br> Comparing routes data from database and excel file: ROUTES DATA DIFFER";
+            StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
+
+            routeDao.deleteRoutes();
+            routeDao.insertRoutes(routesFromExcelFile);
+            uploadingProgressMessage += "<br> Updating routes data in database: DONE";
+            StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
+
+        } else {
+            uploadingProgressMessage += "<br> Comparing routes data from database and excel file: ROUTES DATA MATCH";
+            StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
+        }
+        PlannedDataUploadDao plannedDataUploadDao = new PlannedDataUploadDao();
+        String insertionResult = plannedDataUploadDao.insertNewData(routesFromExcelFile);
 
         StaticsDispatcher.setUploading(false);
+
     }
 }

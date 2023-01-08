@@ -1,4 +1,4 @@
-package Uploading;
+package Service;
 
 import java.io.IOException;
 import java.io.InputStream;

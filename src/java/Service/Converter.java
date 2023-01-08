@@ -12,21 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class Converter {
-                 
-   
 
-    public Date convertDateStampExcelFormatToDate(String dateStampExcelFormat) {
-        Date date;
-        try {
-            date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStampExcelFormat);
-            return date;
-        } catch (ParseException ex) {
-            Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-    
     public String convertDateStampExcelFormatToDatabaseFormat(String excelFormatDateStamp) {
         try {
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(excelFormatDateStamp);
@@ -37,7 +23,7 @@ public class Converter {
             return "";
         }
     }
-    
+
     public LocalDateTime convertStringTimeToDate(String stringTime) {
         if (stringTime == null) {
             return null;
@@ -61,9 +47,7 @@ public class Converter {
         return null;
     }
 
-    /*
-    
-     public String convertDateStampDatabaseFormatToExcelFormat(String databaseFormatDateStamp) {
+    public String convertDateStampDatabaseFormatToExcelFormat(String databaseFormatDateStamp) {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(databaseFormatDateStamp);
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -73,6 +57,32 @@ public class Converter {
             return "";
         }
     }
+
+    public Date convertDateStampExcelFormatToDate(String dateStampExcelFormat) {
+        Date date;
+        try {
+            date = new SimpleDateFormat("dd/MM/yyyy").parse(dateStampExcelFormat);
+            return date;
+        } catch (ParseException ex) {
+            Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    /*
+    public Date convertDateStampDatabaseFormatToDate(String databaseFormatDateStamp) {
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(databaseFormatDateStamp);
+            return date;
+        } catch (ParseException ex) {
+            Logger.getLogger(Converter.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    
+    
     
     public float convertRouteNumber(String routeNumber) {
         if (routeNumber.contains("-")) {

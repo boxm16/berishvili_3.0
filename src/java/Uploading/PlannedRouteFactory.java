@@ -6,9 +6,9 @@ import BasicModels.Route;
 import BasicModels.TripPeriod;
 import BasicModels.TripVoucher;
 import Service.Converter;
+import Service.ExcelReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class PlannedRouteFactory {
     private TreeMap<String, Route> convertExcelDataToRoutes(HashMap<String, String> data) {
         TreeMap<String, Route> routes = new TreeMap<>();
         int excelRowIndex = 7;
-        int routeIndex = 1;
+
         while (!data.isEmpty()) {
             String routeNumberLocationInTheRow = new StringBuilder("I").append(String.valueOf(excelRowIndex)).toString();
             String routeNumber = data.remove(routeNumberLocationInTheRow);//at the same time reading and removing the cell from hash Map
@@ -49,8 +49,7 @@ public class PlannedRouteFactory {
             } else {
                 route = new Route();
                 route.setNumber(routeNumber);
-                route.setIndex(routeIndex);
-                routeIndex++;
+
             }
             route = addRowElementsToBasicRoute(route, data, excelRowIndex);
             routes.put(routeNumber, route);
@@ -64,18 +63,18 @@ public class PlannedRouteFactory {
         String dateStampLocationInTheRow = new StringBuilder("G").append(String.valueOf(rowIndex)).toString();
         String dateStampExcelFormat = data.remove(dateStampLocationInTheRow);
 
-        Date date = this.converter.convertDateStampExcelFormatToDate(dateStampExcelFormat);
+        String dateStamp = this.converter.convertDateStampExcelFormatToDatabaseFormat(dateStampExcelFormat);
 
-        TreeMap<Date, Day> days = route.getDays();
+        TreeMap<String, Day> days = route.getDays();
         Day day;
-        if (days.containsKey(date)) {
-            day = days.get(date);
+        if (days.containsKey(dateStamp)) {
+            day = days.get(dateStamp);
         } else {
             day = new Day();
         }
-        day.setDate(date);
+        day.setDateStamp(dateStamp);
         day = addRowElementsToDay(day, data, rowIndex);
-        days.put(date, day);
+        days.put(dateStamp, day);
 
         route.setDays(days);
         return route;

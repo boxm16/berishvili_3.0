@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UploadStatusAjaxController {
-  
+
     @RequestMapping(value = "/uploadStatusAjax", method = RequestMethod.GET)
     public @ResponseBody
     String getTime() {
         if (StaticsDispatcher.isUploading()) {
-            return "Reading Uploaded Excel File ...........";
+            return StaticsDispatcher.getUploadingProgressMessage();
         } else {
             return "completed";
         }

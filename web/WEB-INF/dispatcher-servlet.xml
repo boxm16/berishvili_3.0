@@ -22,6 +22,10 @@
     <context:component-scan base-package="Service"/>
     <context:component-scan base-package="BasicModels"/>
     <context:component-scan base-package="TechMan"/>
+    <context:component-scan base-package="Route"/>
+    <context:component-scan base-package="Planned"/>
+    <context:component-scan base-package="Index"/>
+    
     <!-- this part is for uploading-->
     <bean id="multipartResolver"   
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 

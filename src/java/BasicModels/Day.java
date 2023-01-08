@@ -1,23 +1,22 @@
 package BasicModels;
 
-import java.util.Date;
 import java.util.TreeMap;
 
 public class Day {
 
-    private Date date;
+    private String dateStamp;
     private TreeMap<Short, Exodus> exoduses;
 
     public Day() {
         exoduses = new TreeMap();
     }
 
-    public Date getDate() {
-        return date;
+    public String getDateStamp() {
+        return dateStamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateStamp(String dateStamp) {
+        this.dateStamp = dateStamp;
     }
 
     public TreeMap<Short, Exodus> getExoduses() {
