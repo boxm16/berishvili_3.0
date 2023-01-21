@@ -33,17 +33,26 @@ public class IndxDao {
             ResultSet resultSet = statement.executeQuery("SELECT DISTINCT route_number, date_stamp FROM planned_trip_voucher");
             while (resultSet.next()) {
                 String routeNumber = resultSet.getString("route_number");
-                Route route = new Route();
-                route.setNumber(routeNumber);
-
-                Day day = new Day();
-                String dateStamp = resultSet.getString("date_stamp");
-                day.setDateStamp(this.converter.convertDateStampDatabaseFormatToExcelFormat(dateStamp));
-                TreeMap<String, Day> days = route.getDays();
-                days.put(dateStamp, day);
-                route.setDays(days);
-
-                routes.put(routeNumber, route);
+                if (routes.containsKey(routeNumber)) {
+                    Route route = routes.get(routeNumber);
+                    Day day = new Day();
+                    String dateStamp = resultSet.getString("date_stamp");
+                    day.setDateStamp(dateStamp);
+                    TreeMap<String, Day> days = route.getDays();
+                    days.put(dateStamp, day);
+                    route.setDays(days);
+                    routes.put(routeNumber, route);
+                } else {
+                    Route route = new Route();
+                    route.setNumber(routeNumber);
+                    Day day = new Day();
+                    String dateStamp = resultSet.getString("date_stamp");
+                    day.setDateStamp(dateStamp);
+                    TreeMap<String, Day> days = route.getDays();
+                    days.put(dateStamp, day);
+                    route.setDays(days);
+                    routes.put(routeNumber, route);
+                }
             }
             resultSet.close();
             statement.close();

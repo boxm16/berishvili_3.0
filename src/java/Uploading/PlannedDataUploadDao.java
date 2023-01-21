@@ -32,7 +32,7 @@ public class PlannedDataUploadDao {
             //Statements to insert records
             PreparedStatement deleteTripPeriodPreparedStatement = connection.prepareStatement("DELETE FROM planned_trip_period");
             PreparedStatement deleteTripVoucherPreparedStatement = connection.prepareStatement("DELETE FROM planned_trip_voucher");
-            PreparedStatement tripVoucherInsertionPreparedStatement = connection.prepareStatement("INSERT INTO planned_trip_voucher (number, route_number, date_stamp, base_number, exodus_number, driver_number, driver_name, bus_number, bus_type, base_leaving_time, base_return_time) VALUES(?,?,?,?,?,?,?,?,?,?,?);");
+            PreparedStatement tripVoucherInsertionPreparedStatement = connection.prepareStatement("INSERT INTO planned_trip_voucher (number, route_number, date_stamp, base_number, exodus_number, driver_number, driver_name, bus_number, bus_type, base_leaving_time, base_return_time, shift, trip_periods_total, kilometrage) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement tripPeriodInsertionPreparedStatement = connection.prepareStatement("INSERT INTO planned_trip_period (trip_voucher_number, type, start_time, arrival_time) VALUES (?,?,?,?);");
 
             deleteTripPeriodPreparedStatement.execute();
@@ -61,8 +61,12 @@ public class PlannedDataUploadDao {
 
                             tripVoucherInsertionPreparedStatement.setObject(10, tripVoucherEntry.getValue().getBaseLeavingTimeScheduled());
                             tripVoucherInsertionPreparedStatement.setObject(11, tripVoucherEntry.getValue().getBaseReturnTimeScheduled());
-                            //here i cut notes lenght if they are more then 2000 letters, because i have that liit in mysql
 
+                            tripVoucherInsertionPreparedStatement.setObject(12, tripVoucherEntry.getValue().getShift());
+                            tripVoucherInsertionPreparedStatement.setObject(13, tripVoucherEntry.getValue().getTripPeriodsTotal());
+                            tripVoucherInsertionPreparedStatement.setObject(14, tripVoucherEntry.getValue().getKilometrage());
+
+                            //here i cut notes lenght if they are more then 2000 letters, because i have that liit in mysql
                             tripVoucherInsertionPreparedStatement.addBatch();
                             //now trip Period
                             ArrayList<TripPeriod> tripPeriods = tripVoucherEntry.getValue().getTripPeriods();
@@ -70,20 +74,17 @@ public class PlannedDataUploadDao {
                                 tripPeriodInsertionPreparedStatement.setString(1, tripVoucherEntry.getValue().getNumber());
                                 tripPeriodInsertionPreparedStatement.setString(2, tripPeriod.getType());
 
-                                tripPeriodInsertionPreparedStatement.setObject(3, tripPeriod.getStartTimeScheduled());
-                                tripPeriodInsertionPreparedStatement.setObject(4, tripPeriod.getArrivalTimeScheduled());
+                                tripPeriodInsertionPreparedStatement.setObject(3, tripPeriod.getStartTime());
+                                tripPeriodInsertionPreparedStatement.setObject(4, tripPeriod.getArrivalTime());
                                 tripPeriodInsertionPreparedStatement.addBatch();
                             }
-
                         }
                     }
-
                 }
-                //Executing the batch
-                tripVoucherInsertionPreparedStatement.executeBatch();
-                tripPeriodInsertionPreparedStatement.executeBatch();
-
             }
+            //Executing the batch
+            tripVoucherInsertionPreparedStatement.executeBatch();
+            tripPeriodInsertionPreparedStatement.executeBatch();
 
             //Saving the changes
             connection.commit();

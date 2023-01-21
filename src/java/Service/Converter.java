@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +71,6 @@ public class Converter {
 
     }
 
-    /*
     public Date convertDateStampDatabaseFormatToDate(String databaseFormatDateStamp) {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(databaseFormatDateStamp);
@@ -80,6 +80,31 @@ public class Converter {
             return null;
         }
     }
+
+    public StringBuilder buildStringFromArrayList(ArrayList<String> arrayList) {
+
+        StringBuilder stringBuilder = new StringBuilder("(");
+        if (arrayList.isEmpty()) {
+            stringBuilder.append(")");
+            return stringBuilder;
+        }
+        int x = 0;
+        for (String entry : arrayList) {
+            if (x == 0) {
+                stringBuilder.append("'").append(entry).append("'");
+            } else {
+                stringBuilder.append(",'").append(entry).append("'");
+            }
+            if (x == arrayList.size() - 1) {
+                stringBuilder.append(")");
+            }
+            x++;
+        }
+        return stringBuilder;
+    }
+
+    /*
+    
     
     
     

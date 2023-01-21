@@ -6,6 +6,7 @@
 package BasicModels;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -14,13 +15,29 @@ import java.time.LocalDateTime;
 public class TripPeriod {
 
     private String type;
-    private LocalDateTime startTimeScheduled;
-    private LocalDateTime arrivalTimeScheduled;
+    private LocalDateTime startTime;
+    private LocalDateTime arrivalTime;
 
     public TripPeriod(String type, LocalDateTime startTimeScheduled, LocalDateTime arrivalTimeScheduled) {
         this.type = type;
-        this.startTimeScheduled = startTimeScheduled;
-        this.arrivalTimeScheduled = arrivalTimeScheduled;
+        this.startTime = startTimeScheduled;
+        this.arrivalTime = arrivalTimeScheduled;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     public String getType() {
@@ -31,21 +48,33 @@ public class TripPeriod {
         this.type = type;
     }
 
-    public LocalDateTime getStartTimeScheduled() {
-        return startTimeScheduled;
+    public String getTypeG() {
+        switch (type) {
+            case "baseLeaving_A":
+                return "ბაზა_A";
+            case "baseLeaving_B":
+                return "ბაზა_B";
+            case "break":
+                return "შესვენება";
+            case "ab":
+                return "A_B";
+            case "ba":
+                return "B_A";
+            case "A_baseReturn":
+                return "A_ბაზა";
+            case "B_baseReturn":
+                return "B_ბაზა";
+            default:
+                return "";
+        }
     }
 
-    public void setStartTimeScheduled(LocalDateTime startTimeScheduled) {
-        this.startTimeScheduled = startTimeScheduled;
+    public String getStartTimeString() {
+        return startTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
-    public LocalDateTime getArrivalTimeScheduled() {
-        return arrivalTimeScheduled;
+    public String getArrivalTimeString() {
+        return arrivalTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
-    public void setArrivalTimeScheduled(LocalDateTime arrivalTimeScheduled) {
-        this.arrivalTimeScheduled = arrivalTimeScheduled;
-    }
-    
-    
 }

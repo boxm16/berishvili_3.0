@@ -124,6 +124,16 @@ public class PlannedRouteFactory {
             String driverNameLocationInTheRow = new StringBuilder("F").append(String.valueOf(rowIndex)).toString();
             String driverName = data.remove(driverNameLocationInTheRow);
 
+            String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
+            String shift = data.remove(shiftLocationInTheRow);
+
+            String tripPeriodsTotalLocationInTheRow = new StringBuilder("S").append(String.valueOf(rowIndex)).toString();
+            float tripPeriodsTotalF = Float.parseFloat(data.remove(tripPeriodsTotalLocationInTheRow));
+            int tripPeriodsTotal = (int) tripPeriodsTotalF;
+
+            String kilometrageLocationInTheRow = new StringBuilder("Q").append(String.valueOf(rowIndex)).toString();
+            float kilometrage = Float.parseFloat(data.remove(kilometrageLocationInTheRow));
+
             String baseLeavingTimeScheduledLocationInTheRow = new StringBuilder("K").append(String.valueOf(rowIndex)).toString();
             LocalDateTime baseLeavingTimeScheduled = this.converter.convertStringTimeToDate(data.remove(baseLeavingTimeScheduledLocationInTheRow));
 
@@ -145,6 +155,9 @@ public class PlannedRouteFactory {
             tripVoucher.setBusType(busType);
             tripVoucher.setDriverNumber(driverNumber);
             tripVoucher.setDriverName(driverName);
+            tripVoucher.setShift(shift);
+            tripVoucher.setTripPeriodsTotal(tripPeriodsTotal);
+            tripVoucher.setKilometrage(kilometrage);
             tripVoucher.setBaseLeavingTimeScheduled(baseLeavingTimeScheduled);
 
             tripVoucher.setBaseReturnTimeScheduled(baseReturnTimeScheduled);

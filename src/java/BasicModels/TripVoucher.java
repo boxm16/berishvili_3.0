@@ -15,6 +15,11 @@ public class TripVoucher {
     private LocalDateTime baseLeavingTimeScheduled;
     private LocalDateTime baseReturnTimeScheduled;
     private ArrayList<TripPeriod> tripPeriods;
+    
+    private String shift;
+    private int tripPeriodsTotal;
+    private float kilometrage;
+    
 
     public TripVoucher() {
         this.tripPeriods = new ArrayList();
@@ -90,6 +95,30 @@ public class TripVoucher {
 
     public void setTripPeriods(ArrayList<TripPeriod> tripPeriods) {
         this.tripPeriods = tripPeriods;
+    }
+
+    public String getShift() {
+        return shift;
+    }
+
+    public void setShift(String shift) {
+        this.shift = shift;
+    }
+
+    public int getTripPeriodsTotal() {
+        return tripPeriodsTotal;
+    }
+
+    public void setTripPeriodsTotal(int tripPeriodsTotal) {
+        this.tripPeriodsTotal = tripPeriodsTotal;
+    }
+
+    public float getKilometrage() {
+        return kilometrage;
+    }
+
+    public void setKilometrage(float kilometrage) {
+        this.kilometrage = kilometrage;
     }
 
    

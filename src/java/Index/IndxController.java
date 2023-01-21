@@ -43,7 +43,7 @@ public class IndxController {
         for (Map.Entry<String, Route> routeEntry : routes.entrySet()) {
             TreeMap<String, Day> days = routeEntry.getValue().getDays();
             for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
-                Date date = this.converter.convertDateStampExcelFormatToDate(dayEntry.getValue().getDateStamp());
+                Date date = this.converter.convertDateStampDatabaseFormatToDate(dayEntry.getValue().getDateStamp());
 
                 IndxDate indexDate = new IndxDate();
                 indexDate.setDateStampExcelFormat(dayEntry.getValue().getDateStamp());
