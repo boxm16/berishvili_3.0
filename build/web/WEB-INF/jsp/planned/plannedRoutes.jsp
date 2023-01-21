@@ -305,7 +305,6 @@
                         <center>
                             ${plannedRoutesPager.getDisplay()}
                         </center>
-                        <button onclick="alberta()">labuka</button>
 
                         <button type="button" class="btn btn-warning">
                             <span> <a href="plannedRoutesExcelExportDashboard.htm">ექსელში ექსპორტი</a> </span>
@@ -331,7 +330,7 @@
                         </tr>
                         <c:forEach var="day" items="${plannedRoutes.days}">
                             <tr style="background-color:#4863A0">
-                                <td colspan='16' align="center">
+                                <td colspan='3' align="center">
                                     თარიღი: ${day.value.getDateStamp()}
                                 </td>
                             </tr>
@@ -344,7 +343,7 @@
                                 <c:forEach var="tripVoucher" items="${exodus.value.tripVouchers}">
 
                                     <tr>
-                                        <td colspan='16' align="center">
+                                        <td colspan='3' align="center">
                                             მარშრუტა #: ${plannedRoutes.number}.
                                             თარიღი: ${day.value.dateStamp}.
                                             გასვლა #: ${exodus.value.number}.
@@ -356,9 +355,9 @@
                                         <tr>
 
 
-                                            <td name='startTimeScheduled' align="center">${tripPeriod.getStartTimeString()} </td>
+                                            <td align="center">${tripPeriod.getStartTimeString()} </td>
                                             <td align="center">${tripPeriod.typeG} </td>
-                                            <td name='arrivalTimeScheduled' align="center">${tripPeriod.getArrivalTimeString()} </td>
+                                            <td align="center">${tripPeriod.getArrivalTimeString()} </td>
 
                                         </tr>
                                     </c:forEach>
@@ -388,140 +387,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
-                            $(document).ready(function () {
-                                $("#sidebar").mCustomScrollbar({
-                                    theme: "minimal"
-                                });
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
 
-                                $('#sidebarCollapse').on('click', function () {
-                                    $('#sidebar, #content').toggleClass('active');
-                                    $('.collapse.in').toggleClass('in');
-                                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                                });
-                            });
-                            //-------------- this part is for cell marking -------------
-                            var chosenRow = null
-                            var cells = document.getElementById("mainTable").querySelectorAll("tr");
-                            for (var cell of cells) {
-                                // cell.addEventListener('click', markRow);
-                                cell.addEventListener('dblclick', markCells);
-                            }
-                            var previousCells = new Array();
-                            function markCells(event) {
-                                if (previousCells.length > 0) {
-                                    for (let x = 0; x < previousCells.length; x++) {
-                                        var loc = previousCells[x];
-                                        var el = loc.element;
-                                        el.style.backgroundColor = loc.originalColor;
-                                    }
-                                }
-                                var targetCell = event.target;
-                                var cellName = targetCell.getAttribute('name');
-                                if (cellName == "tripPeriodScheduledTime") {
-                                    var targetRow = event.target.parentNode;
-                                    var cellOne = targetRow.querySelector("td[name=startTimeScheduled]");
-                                    var cellTwo = targetRow.querySelector("td[name=arrivalTimeScheduled");
-
-                                    saveElementColor(targetCell, cellOne, cellTwo);
-
-                                    targetCell.style.backgroundColor = "violet";
-                                    cellOne.style.backgroundColor = "violet";
-                                    cellTwo.style.backgroundColor = "violet";
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
 
 
-                                }
-                                if (cellName == "tripPeriodActualTime") {
-                                    var targetRow = event.target.parentNode;
-                                    var cellOne = targetRow.querySelector("td[name=startTimeActual]");
-                                    var cellTwo = targetRow.querySelector("td[name=arrivalTimeActual");
-
-                                    saveElementColor(targetCell, cellOne, cellTwo);
-
-                                    targetCell.style.backgroundColor = "violet";
-                                    cellOne.style.backgroundColor = "violet";
-                                    cellTwo.style.backgroundColor = "violet";
-                                }
-                                if (cellName == "tripPeriodDifferenceTime") {
-                                    var targetRow = event.target.parentNode;
-                                    var cellOne = targetRow.querySelector("td[name=tripPeriodScheduledTime]");
-                                    var cellTwo = targetRow.querySelector("td[name=tripPeriodActualTime");
-
-                                    saveElementColor(targetCell, cellOne, cellTwo);
-
-                                    targetCell.style.backgroundColor = "violet";
-                                    cellOne.style.backgroundColor = "violet";
-                                    cellTwo.style.backgroundColor = "violet";
-                                }
 
 
-                                if (cellName == "haltTimeScheduled") {
+            //------------------------------------------------------
 
-                                    var targetRow = event.target.parentNode;
-                                    var previousRow = targetRow.previousElementSibling;
-                                    var cellOne = targetRow.querySelector("td[name=startTimeScheduled]");
-                                    var cellTwo = previousRow.querySelector("td[name=arrivalTimeScheduled");
-                                    if (cellTwo != null) {
-
-                                        saveElementColor(targetCell, cellOne, cellTwo);
-
-                                        targetCell.style.backgroundColor = "violet";
-                                        cellOne.style.backgroundColor = "violet";
-                                        cellTwo.style.backgroundColor = "violet";
-                                    }
-                                }
-                                if (cellName == "haltTimeActual") {
-                                    var targetRow = event.target.parentNode;
-                                    var previousRow = targetRow.previousElementSibling;
-                                    var cellOne = targetRow.querySelector("td[name=startTimeActual]");
-                                    var cellTwo = previousRow.querySelector("td[name=arrivalTimeActual");
-                                    if (cellTwo != null) {
-
-                                        saveElementColor(targetCell, cellOne, cellTwo);
-
-                                        targetCell.style.backgroundColor = "violet";
-                                        cellOne.style.backgroundColor = "violet";
-                                        cellTwo.style.backgroundColor = "violet";
-                                    }
-                                }
-
-                                if (cellName == "lostTime") {
-                                    /*
-                                     var targetRow = event.target.parentNode;
-                                     
-                                     var cellOne = targetRow.querySelector("td[name=startTimeDifference]");
-                                     var cellTwo = targetRow.querySelector("td[name=haltTimeActual");
-                                     if (cellTwo != null) {
-                                     
-                                     saveElementColor(targetCell, cellOne, cellTwo);
-                                     
-                                     if (targetCell.innerText == cellOne.innerText) {
-                                     cellOne.style.backgroundColor = "violet";
-                                     }
-                                     if (targetCell.innerText == cellTwo.innerText) {
-                                     cellTwo.style.backgroundColor = "violet";
-                                     }
-                                     targetCell.style.backgroundColor = "violet";
-                                     
-                                     } 
-                                     */
-                                }
-                            }
-
-
-                            function saveElementColor(targetCell, cellOne, cellTwo) {
-                                var loc_0 = {element: targetCell, originalColor: targetCell.style.backgroundColor};
-                                var loc_1 = {element: cellOne, originalColor: cellOne.style.backgroundColor};
-                                var loc_2 = {element: cellTwo, originalColor: cellTwo.style.backgroundColor};
-
-
-                                previousCells.push(loc_0);
-                                previousCells.push(loc_1);
-                                previousCells.push(loc_2);
-                            }
-                            //------------------------------------------------------
-                            function alberta() {
-                                alert('SSS');
-                            }
 
         </script>
     </body>
