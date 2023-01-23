@@ -275,18 +275,21 @@
 
 
         </style>
+        <script type="text/javascript"
+        src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     </head>
     <body>
         <div class="wrapper">
             <!-- Sidebar  -->
             <nav id="sidebar">
                 <div class="sidebar-header">
-                    <center><h5>მარშრუტები</h5></center>
+                    <center><h5>მარშ/ები</h5></center>
                 </div>
                 <ul class="list-unstyled components">
-                    <c:forEach var="routeNumber" items="${plannedRoutesPager.routeNumbers}"  >
-                        <li ${plannedRoutesPager.currentRoute==routeNumber? "style='background-color:green;'":""}>
-                            <a href="plannedRoutesRequest.htm?requestedRoute=${routeNumber}">${routeNumber}</a>
+                    <c:forEach var="routeNumber" items="${routeNumbers}"  >
+                        <li align='center'>
+                            <button style='width:80px; border-radius: 60%;' class="btn btn-warning" onclick="ajax(${routeNumber})"> ${routeNumber}</button>
+
                         </li>
                     </c:forEach>
                 </ul>
@@ -322,7 +325,7 @@
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="body">
                         <tr>
                             <td colspan='16' align="center">
                                 მარშრუტ #: ${plannedRoutes.number}
@@ -377,8 +380,8 @@
             </div>
         </div>
 
-        <!-- jQuery CDN - Slim version (=without AJAX) -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!-- jQuery CDN -  -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <!-- Popper.JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <!-- Bootstrap JS -->
@@ -387,24 +390,31 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $("#sidebar").mCustomScrollbar({
-                    theme: "minimal"
-                });
+                                $(document).ready(function () {
+                                    $("#sidebar").mCustomScrollbar({
+                                        theme: "minimal"
+                                    });
+                                    $('#sidebarCollapse').on('click', function () {
+                                        $('#sidebar, #content').toggleClass('active');
+                                        $('.collapse.in').toggleClass('in');
+                                        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                                    });
+                                });
+                                //------------------------------------------------------
 
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar, #content').toggleClass('active');
-                    $('.collapse.in').toggleClass('in');
-                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                });
-            });
+                                function ajax(routeNumber) {
+                                    $("#body").html("");
+                                    $.ajax({
+                                        url: 'requestRoute.htm?number=' + routeNumber,
+                                        //  contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 
+                                        success: function (status) {
+                                            $("#body").html(status);
+                                            console.log(status)
+                                        }
+                                    });
+                                }
 
-
-
-            //------------------------------------------------------
-
-
-        </script>
+        </script>                           
     </body>
 </html>
