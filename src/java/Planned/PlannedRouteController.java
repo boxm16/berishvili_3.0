@@ -1,15 +1,22 @@
 package Planned;
 
+import BasicModels.Day;
+import BasicModels.Exodus;
 import BasicModels.Route;
+import BasicModels.TripPeriod;
+import BasicModels.TripVoucher;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PlannedRouteController {
@@ -29,6 +36,36 @@ public class PlannedRouteController {
         model.addAttribute("plannedRoutes", plannedRoute);
 
         return "planned/plannedRoutes";
+    }
+    
+     @RequestMapping(value = "/requestRoute", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public @ResponseBody
+    String getTimeX(@RequestParam("number") String requestedRouteNumber) {
+        System.out.println(requestedRouteNumber);
+        StringBuilder response = new StringBuilder();
+        response.append("<tr style='background-color:green'><td colspan='3' align=\"center\">marshgurti #:"+requestedRouteNumber+"</td></tr> ");
+        ArrayList<String> dates = this.routesDates.get(requestedRouteNumber);
+        Route plannedRoute = plannedRouteDao.getPlannedRoute(requestedRouteNumber, dates);
+        TreeMap<String, Day> days = plannedRoute.getDays();
+        for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
+            response.append("<tr style='background-color:red'> <td colspan='3' align=\"center\">თარიღი:" + dayEntry.getValue().getDateStamp() + "</td></tr>");
+            TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+            for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
+                response.append("<tr><td colspan='3' align=\"center\">გასვლა #:" + exodusEntry.getValue().getNumber() + "</td></tr>");
+                TreeMap<String, TripVoucher> tripVouchers = exodusEntry.getValue().getTripVouchers();
+                for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {
+                    response.append("<tr><td colspan='3' align=\"center\">" + tripVoucherEntry.getValue().getNumber() + "</td></tr>");
+                    ArrayList<TripPeriod> tripPeriods = tripVoucherEntry.getValue().getTripPeriods();
+                    for (TripPeriod tripPeriod : tripPeriods) {
+                        response.append("<tr><td align=\"center\">" + tripPeriod.getStartTimeString() + "</td>"
+                                + "<td align=\"center\">" + tripPeriod.getTypeG() + "</td>"
+                                + "<td align=\"center\">" + tripPeriod.getArrivalTimeString() + "</td>"
+                                + "</tr>");
+                    }
+                }
+            }
+        }
+        return response.toString();
     }
 
     @RequestMapping(value = "plannedRoutesSummary")
