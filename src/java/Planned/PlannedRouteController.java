@@ -1,7 +1,9 @@
 package Planned;
 
+import BasicModels.Route;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,12 @@ public class PlannedRouteController {
     @RequestMapping(value = "plannedRoutes")
     public String plannedRoutes(@RequestParam("routes:dates") String requestedRoutesDates, ModelMap model, HttpSession session) {
         this.routesDates = decodeRequestedRoutesDates(requestedRoutesDates);
+        Map.Entry<String, ArrayList<String>> firstEntry = this.routesDates.entrySet().stream().findFirst().get();
+        Route plannedRoute = plannedRouteDao.getPlannedRoute(firstEntry.getKey(), firstEntry.getValue());
+
+        model.addAttribute("routeNumbers", this.routesDates.keySet());
+        model.addAttribute("plannedRoutes", plannedRoute);
+
         return "planned/plannedRoutes";
     }
 
