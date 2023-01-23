@@ -1,7 +1,7 @@
 package Planned;
 
-import BasicModels.RoutesPager;
-import Service.PagerFactory;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,66 +12,75 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class PlannedRouteController {
 
+    LinkedHashMap<String, ArrayList<String>> routesDates;
+
     @Autowired
     private PlannedRouteDao plannedRouteDao;
 
-    @Autowired
-    private PagerFactory pagerFactory;
-
     @RequestMapping(value = "plannedRoutes")
-    public String plannedRoutes(@RequestParam("routes:dates") String routesDates, ModelMap model, HttpSession session) {
-        RoutesPager plannedRoutesPager = pagerFactory.createRoutesPager(routesDates, "plannedRoutes");
-
-        PlannedRoute plannedRoutes = plannedRouteDao.getPlannedRoute(plannedRoutesPager);
-
-        session.setAttribute("plannedRoutesPager", plannedRoutesPager);
-
-        model.addAttribute("plannedRoutesPager", plannedRoutesPager);
-        model.addAttribute("plannedRoutes", plannedRoutes);
-
-        return "planned/plannedRoutes";
-    }
-
-    @RequestMapping(value = "plannedRoutesRequest")
-    public String detailedRoutesRequest(@RequestParam("requestedRoute") String requestedRoute, ModelMap model, HttpSession session) {
-        RoutesPager plannedRoutesPager = (RoutesPager) session.getAttribute("plannedRoutesPager");
-        if (plannedRoutesPager == null) {
-            return "errorPage";
-        }
-        plannedRoutesPager.setCurrentRoute(requestedRoute);
-        PlannedRoute plannedRoute = plannedRouteDao.getPlannedRoute(plannedRoutesPager);
-        session.setAttribute("plannedRoutesPager", plannedRoutesPager);
-
-        model.addAttribute("plannedRoutesPager", plannedRoutesPager);
-        model.addAttribute("plannedRoutes", plannedRoute);
+    public String plannedRoutes(@RequestParam("routes:dates") String requestedRoutesDates, ModelMap model, HttpSession session) {
+        this.routesDates = decodeRequestedRoutesDates(requestedRoutesDates);
         return "planned/plannedRoutes";
     }
 
     @RequestMapping(value = "plannedRoutesSummary")
     public String plannedRoutesSummary(@RequestParam("routes:dates") String routesDates, ModelMap model, HttpSession session) {
-        RoutesPager plannedRoutesSummaryPager = pagerFactory.createRoutesPager(routesDates, "plannedRoutesSummary");
+        //    RoutesPager plannedRoutesSummaryPager = pagerFactory.createRoutesPager(routesDates, "plannedRoutesSummary");
 
-        PlannedRoute plannedRoutesSummary = plannedRouteDao.getPlannedRouteSummary(plannedRoutesSummaryPager);
-
-        session.setAttribute("plannedRoutesSummaryPager", plannedRoutesSummaryPager);
-
-        model.addAttribute("plannedRoutesSummaryPager", plannedRoutesSummaryPager);
-        model.addAttribute("plannedRoutesSummary", plannedRoutesSummary);
+        //   PlannedRoute plannedRoutesSummary = plannedRouteDao.getPlannedRouteSummary(plannedRoutesSummaryPager);
+        // session.setAttribute("plannedRoutesSummaryPager", plannedRoutesSummaryPager);
+        //  model.addAttribute("plannedRoutesSummaryPager", plannedRoutesSummaryPager);
+        //  model.addAttribute("plannedRoutesSummary", plannedRoutesSummary);
         return "planned/plannedRoutesSummary";
     }
 
     @RequestMapping(value = "plannedRoutesSummaryRequest")
     public String plannedRoutesSummaryRequest(@RequestParam("requestedRoute") String requestedRoute, ModelMap model, HttpSession session) {
-        RoutesPager plannedRoutesSummaryPager = (RoutesPager) session.getAttribute("plannedRoutesSummaryPager");
-        if (plannedRoutesSummaryPager == null) {
-            return "errorPage";
-        }
-        plannedRoutesSummaryPager.setCurrentRoute(requestedRoute);
-        PlannedRoute plannedRoutesSummary = plannedRouteDao.getPlannedRouteSummary(plannedRoutesSummaryPager);
-        session.setAttribute("plannedRoutesSummaryPager", plannedRoutesSummaryPager);
+        // RoutesPager plannedRoutesSummaryPager = (RoutesPager) session.getAttribute("plannedRoutesSummaryPager");
+        //if (plannedRoutesSummaryPager == null) {
+        //    return "errorPage";
+        // }
+        //
+        //  plannedRoutesSummaryPager.setCurrentRoute (requestedRoute);
+        // PlannedRoute plannedRoutesSummary = plannedRouteDao.getPlannedRouteSummary(plannedRoutesSummaryPager);
+        //session.setAttribute (
+        //"plannedRoutesSummaryPager", plannedRoutesSummaryPager);
+        //model.addAttribute (
+        // "plannedRoutesSummaryPager", plannedRoutesSummaryPager);
+        // model.addAttribute (
+        // "plannedRoutesSummary", plannedRoutesSummary);
 
-        model.addAttribute("plannedRoutesSummaryPager", plannedRoutesSummaryPager);
-        model.addAttribute("plannedRoutesSummary", plannedRoutesSummary);
         return "planned/plannedRoutesSummary";
+    }
+
+    private LinkedHashMap<String, ArrayList<String>> decodeRequestedRoutesDates(String requestedRoutesDates) {
+        LinkedHashMap<String, ArrayList<String>> routesDates = new LinkedHashMap<>();
+
+        //trimming and cleaning input
+        requestedRoutesDates = requestedRoutesDates.trim();
+        if (requestedRoutesDates.length() == 0) {
+            return null;
+        }
+        if (requestedRoutesDates.substring(requestedRoutesDates.length() - 1, requestedRoutesDates.length()).equals(",")) {
+            requestedRoutesDates = requestedRoutesDates.substring(0, requestedRoutesDates.length() - 1).trim();
+        }
+        String[] routeDatesArray = requestedRoutesDates.split(",");
+        for (String routeDate : routeDatesArray) {
+
+            String[] routeDateArray = routeDate.split(":");
+            String routeNumber = routeDateArray[0];
+            String dateStamp = routeDateArray[1];
+
+            ArrayList<String> dateStamps;
+            if (routesDates.containsKey(routeNumber)) {
+                dateStamps = routesDates.get(routeNumber);
+            } else {
+                dateStamps = new ArrayList<>();
+            }
+            dateStamps.add(dateStamp);
+            routesDates.put(routeNumber, dateStamps);
+
+        }
+        return routesDates;
     }
 }

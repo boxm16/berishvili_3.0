@@ -2,7 +2,7 @@ package Planned;
 
 import BasicModels.Day;
 import BasicModels.Exodus;
-import BasicModels.RoutesPager;
+import BasicModels.Route;
 import BasicModels.TripPeriod;
 import BasicModels.TripVoucher;
 import Service.Converter;
@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +29,15 @@ public class PlannedRouteDao {
 
     private Connection connection;
 
-    public PlannedRoute getPlannedRoute(RoutesPager plannedRoutesPager) {
-        PlannedRoute plannedRoute = new PlannedRoute();
-        plannedRoute.setNumber(plannedRoutesPager.getCurrentRoute());
+    public Route getPlannedRoute(String routeNumber, ArrayList<String> dateStamps) {
+        Route plannedRoute = new Route();
+        plannedRoute.setNumber(routeNumber);
 
         StringBuilder query = new StringBuilder();
         StringBuilder queryBuilderInitialPart = new StringBuilder("SELECT exodus_number, date_stamp, t2.number, type, start_time, arrival_time FROM route t1 INNER JOIN planned_trip_voucher t2 ON t1.number=t2.route_number INNER JOIN planned_trip_period t3 ON t2.number=t3.trip_voucher_number WHERE route_number=");
-        StringBuilder queryBuilderDateStampPart = this.converter.buildStringFromArrayList(plannedRoutesPager.getDateStamps());
+        StringBuilder queryBuilderDateStampPart = this.converter.buildStringFromArrayList(dateStamps);
 
-        query = queryBuilderInitialPart.append("'" + plannedRoutesPager.getCurrentRoute() + "'").
+        query = queryBuilderInitialPart.append("'" + routeNumber + "'").
                 append(" AND date_stamp IN ").append(queryBuilderDateStampPart);
         // append(" ORDER BY date_stamp, exodus_number, start_time ;");
         System.out.println(query);
@@ -91,6 +92,7 @@ public class PlannedRouteDao {
         return plannedRoute;
     }
 
+    /*
     PlannedRoute getPlannedRouteSummary(RoutesPager plannedRoutesSummaryPager) {
         PlannedRoute plannedRoute = new PlannedRoute();
         plannedRoute.setNumber(plannedRoutesSummaryPager.getCurrentRoute());
@@ -151,5 +153,5 @@ public class PlannedRouteDao {
         }
         return plannedRoute;
     }
-
+     */
 }
