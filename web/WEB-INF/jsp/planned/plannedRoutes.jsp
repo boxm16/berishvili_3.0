@@ -162,6 +162,24 @@
                 color: #fff !important;
             }
 
+            .sidenav {
+                height: 100%;
+                width: 160px;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: green;
+                overflow-x: hidden;
+                padding-top: 20px;
+            }
+
+
+
+            .sidenav button:hover {
+                background-color: red;
+            }
+
             /* ---------------------------------------------------
                 CONTENT STYLE
             ----------------------------------------------------- */
@@ -281,30 +299,24 @@
     <body>
         <div class="wrapper">
             <!-- Sidebar  -->
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <center><h5>მარშ/ები</h5></center>
-                </div>
-                <ul class="list-unstyled components">
-                    <c:forEach var="routeNumber" items="${routeNumbers}"  >
-                        <li align='center'>
-                            <button style='width:80px; border-radius: 60%;' class="btn btn-warning" onclick="ajax(${routeNumber})"> ${routeNumber}</button>
+            <div class="sidenav">
 
-                        </li>
-                    </c:forEach>
-                </ul>
-            </nav>
+                <c:forEach var="routeNumber" items="${routeNumbers}"  >
+                    <center>
+                        <button style='font-size: 20px; width:60px; border-radius: 50%;' class="btn btn-warning" onclick="ajax(${routeNumber})"> ${routeNumber}</button>
+                    </center>
+                    <br>
+
+                </c:forEach>
+
+            </div>
 
             <!-- Page Content  -->
             <div id="content">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                     <div class="container-fluid">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
-                            <span>< ></span>
-                        </button>
-
+                      
                         <center>
                             ${plannedRoutesPager.getDisplay()}
                         </center>
@@ -390,30 +402,30 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $("#sidebar").mCustomScrollbar({
-                                        theme: "minimal"
-                                    });
-                                    $('#sidebarCollapse').on('click', function () {
-                                        $('#sidebar, #content').toggleClass('active');
-                                        $('.collapse.in').toggleClass('in');
-                                        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                                    });
+                            $(document).ready(function () {
+                                $("#sidebar").mCustomScrollbar({
+                                    theme: "minimal"
                                 });
-                                //------------------------------------------------------
+                                $('#sidebarCollapse').on('click', function () {
+                                    $('#sidebar, #content').toggleClass('active');
+                                    $('.collapse.in').toggleClass('in');
+                                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                                });
+                            });
+                            //------------------------------------------------------
 
-                                function ajax(routeNumber) {
-                                    $("#body").html("");
-                                    $.ajax({
-                                        url: 'requestRoute.htm?number=' + routeNumber,
-                                        //  contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                            function ajax(routeNumber) {
+                                $("#body").html("");
+                                $.ajax({
+                                    url: 'requestRoute.htm?number=' + routeNumber,
+                                    //  contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 
-                                        success: function (status) {
-                                            $("#body").html(status);
-                                            console.log(status)
-                                        }
-                                    });
-                                }
+                                    success: function (status) {
+                                        $("#body").html(status);
+                                        console.log(status)
+                                    }
+                                });
+                            }
 
         </script>                           
     </body>
