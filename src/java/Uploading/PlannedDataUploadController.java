@@ -29,7 +29,7 @@ public class PlannedDataUploadController {
     }
 
     @RequestMapping(value = "/uploadPlannedData", method = RequestMethod.POST)
-    public String upload(@RequestParam CommonsMultipartFile file, ModelMap model) {
+    public String uploadPlannedData(@RequestParam CommonsMultipartFile file, ModelMap model) {
 
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println("Starting working on uploaded excel file (saving as file and saving into database)");

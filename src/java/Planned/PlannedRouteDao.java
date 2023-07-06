@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,45 @@ public class PlannedRouteDao {
     private Converter converter;
 
     private Connection connection;
+
+    TreeMap<String, Route> getPlannedRoutes() {
+        TreeMap<String, Route> routes = new TreeMap<>();
+        try {
+            connection = dataBaseConnection.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT DISTINCT route_number, date_stamp FROM planned_trip_voucher");
+            while (resultSet.next()) {
+                String routeNumber = resultSet.getString("route_number");
+                if (routes.containsKey(routeNumber)) {
+                    Route route = routes.get(routeNumber);
+                    Day day = new Day();
+                    String dateStamp = resultSet.getString("date_stamp");
+                    day.setDateStamp(dateStamp);
+                    TreeMap<String, Day> days = route.getDays();
+                    days.put(dateStamp, day);
+                    route.setDays(days);
+                    routes.put(routeNumber, route);
+                } else {
+                    Route route = new Route();
+                    route.setNumber(routeNumber);
+                    Day day = new Day();
+                    String dateStamp = resultSet.getString("date_stamp");
+                    day.setDateStamp(dateStamp);
+                    TreeMap<String, Day> days = route.getDays();
+                    days.put(dateStamp, day);
+                    route.setDays(days);
+                    routes.put(routeNumber, route);
+                }
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PlannedRouteDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        }
+        return routes;
+    }
 
     public Route getPlannedRoute(String routeNumber, ArrayList<String> dateStamps) {
         Route plannedRoute = new Route();
@@ -76,7 +116,7 @@ public class PlannedRouteDao {
                 LocalDateTime startTime = converter.convertStringTimeToDate(resultSet.getString("start_time"));
                 LocalDateTime arrivalTime = converter.convertStringTimeToDate(resultSet.getString("arrival_time"));
 
-                TripPeriod newTripPeriod = new TripPeriod(type, startTime, arrivalTime);
+                TripPeriod newTripPeriod = new TripPeriod(type, startTime, null, null, arrivalTime, null, null);
 
                 TripVoucher tripVoucher = exodus.getTripVouchers().get(tripVoucherNumber);
                 tripVoucher.getTripPeriods().add(newTripPeriod);

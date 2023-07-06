@@ -229,7 +229,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                     <div class="container-fluid">
 
-                        <a class="btn btn-primary" href="goForPlannedDataUpload.htm" style="font-size: 20px">ახალი მონაცემების ატვირთვა</a>
+                        <a class="btn btn-primary" href="goForActualDataUpload.htm" style="font-size: 20px">ახალი მონაცემების ატვირთვა</a>
 
 
                         <div style="margin-left: 5%;"> 
@@ -330,29 +330,21 @@
             </div>
             <nav id="sidebar">
                 <div class="sidebar-header" style="background-color: green">
-                    <h3> <a href="http://ec2-54-74-154-166.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>
+                    <h3> <a href="http://ec2-34-245-183-24.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>
                 </div>
                 <div class="sidebar-header">
                     <!--- <h3>ფუნქციები</h3> ---->
                 </div>
 
-                <ul class="list-unstyled components">
-                    <li>
-                        <a href="#plannedRoutesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>დაგეგმილი</h3></a>
-                        <ul class="collapse list-unstyled" id="plannedRoutesSubmenu">
-                            <li>
-                                <a href="#" onclick="requestRouter('plannedRoutes.htm')"><h4>მარშრუტების დათვალიერება</h4></a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="requestRouter('plannedRoutesSummary.htm')"><h4>SAXELI VER MOVIPIQRE</h4></a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+
                 <ul class="list-unstyled CTAs">
+
                     <li>
-                        <a href="routes.htm"><h3>მარშრუტები</h3></a>
+                        <a href="routes.htm" target="_blank"><h3>მარშრუტები</h3></a>
                     </li>
+                    <li>
+                        <a href="#" onclick="requestRouter('plannedRoutesMainPage.htm')"><h3>დაგემილი</h3></a>
+                    </li> 
                     <li>
                         <a href="techMan.htm"><h3>techMan</h3></a>
                     </li>

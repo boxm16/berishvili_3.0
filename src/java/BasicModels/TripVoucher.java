@@ -13,13 +13,22 @@ public class TripVoucher {
     private String driverName;
 
     private LocalDateTime baseLeavingTimeScheduled;
+    private LocalDateTime baseLeavingTimeActual;
+    private LocalDateTime baseLeavingTimeRedacted;
+
     private LocalDateTime baseReturnTimeScheduled;
+    private LocalDateTime baseReturnTimeActual;
+    private LocalDateTime baseReturnTimeRedacted;
+
     private ArrayList<TripPeriod> tripPeriods;
-    
+
     private String shift;
-    private int tripPeriodsTotal;
-    private float kilometrage;
+    private int tripPeriodsScheduledTotal;
+    private int tripPeriodsActualTotal;
+    private float kilometrageScheduled;
+    private float kilometrageActual;
     
+    private String note;
 
     public TripVoucher() {
         this.tripPeriods = new ArrayList();
@@ -81,12 +90,44 @@ public class TripVoucher {
         this.baseLeavingTimeScheduled = baseLeavingTimeScheduled;
     }
 
+    public LocalDateTime getBaseLeavingTimeActual() {
+        return baseLeavingTimeActual;
+    }
+
+    public void setBaseLeavingTimeActual(LocalDateTime baseLeavingTimeActual) {
+        this.baseLeavingTimeActual = baseLeavingTimeActual;
+    }
+
+    public LocalDateTime getBaseLeavingTimeRedacted() {
+        return baseLeavingTimeRedacted;
+    }
+
+    public void setBaseLeavingTimeRedacted(LocalDateTime baseLeavingTimeRedacted) {
+        this.baseLeavingTimeRedacted = baseLeavingTimeRedacted;
+    }
+
     public LocalDateTime getBaseReturnTimeScheduled() {
         return baseReturnTimeScheduled;
     }
 
     public void setBaseReturnTimeScheduled(LocalDateTime baseReturnTimeScheduled) {
         this.baseReturnTimeScheduled = baseReturnTimeScheduled;
+    }
+
+    public LocalDateTime getBaseReturnTimeActual() {
+        return baseReturnTimeActual;
+    }
+
+    public void setBaseReturnTimeActual(LocalDateTime baseReturnTimeActual) {
+        this.baseReturnTimeActual = baseReturnTimeActual;
+    }
+
+    public LocalDateTime getBaseReturnTimeRedacted() {
+        return baseReturnTimeRedacted;
+    }
+
+    public void setBaseReturnTimeRedacted(LocalDateTime baseReturnTimeRedacted) {
+        this.baseReturnTimeRedacted = baseReturnTimeRedacted;
     }
 
     public ArrayList<TripPeriod> getTripPeriods() {
@@ -105,23 +146,45 @@ public class TripVoucher {
         this.shift = shift;
     }
 
-    public int getTripPeriodsTotal() {
-        return tripPeriodsTotal;
+    public int getTripPeriodsScheduledTotal() {
+        return tripPeriodsScheduledTotal;
     }
 
-    public void setTripPeriodsTotal(int tripPeriodsTotal) {
-        this.tripPeriodsTotal = tripPeriodsTotal;
+    public void setTripPeriodsScheduledTotal(int tripPeriodsScheduledTotal) {
+        this.tripPeriodsScheduledTotal = tripPeriodsScheduledTotal;
     }
 
-    public float getKilometrage() {
-        return kilometrage;
+    public int getTripPeriodsActualTotal() {
+        return tripPeriodsActualTotal;
     }
 
-    public void setKilometrage(float kilometrage) {
-        this.kilometrage = kilometrage;
+    public void setTripPeriodsActualTotal(int tripPeriodsActualTotal) {
+        this.tripPeriodsActualTotal = tripPeriodsActualTotal;
     }
 
-   
-    
+    public float getKilometrageScheduled() {
+        return kilometrageScheduled;
+    }
+
+    public void setKilometrageScheduled(float kilometrageScheduled) {
+        this.kilometrageScheduled = kilometrageScheduled;
+    }
+
+    public float getKilometrageActual() {
+        return kilometrageActual;
+    }
+
+    public void setKilometrageActual(float kilometrageActual) {
+        this.kilometrageActual = kilometrageActual;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 
 }

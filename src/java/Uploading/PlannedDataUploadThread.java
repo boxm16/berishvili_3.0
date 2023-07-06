@@ -61,9 +61,11 @@ public class PlannedDataUploadThread extends Thread {
             uploadingProgressMessage += "<br> Comparing routes data from database and excel file: ROUTES DATA MATCH";
             StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
         }
+        uploadingProgressMessage += "<br> DATABASE PART STARTED:.....";
+        StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
         PlannedDataUploadDao plannedDataUploadDao = new PlannedDataUploadDao();
         String insertionResult = plannedDataUploadDao.insertNewData(routesFromExcelFile);
-
+        System.out.println("ALL SET");
         StaticsDispatcher.setUploading(false);
 
     }

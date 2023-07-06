@@ -156,8 +156,8 @@ public class PlannedRouteFactory {
             tripVoucher.setDriverNumber(driverNumber);
             tripVoucher.setDriverName(driverName);
             tripVoucher.setShift(shift);
-            tripVoucher.setTripPeriodsTotal(tripPeriodsTotal);
-            tripVoucher.setKilometrage(kilometrage);
+            tripVoucher.setTripPeriodsScheduledTotal(tripPeriodsTotal);
+            tripVoucher.setKilometrageScheduled(kilometrage);
             tripVoucher.setBaseLeavingTimeScheduled(baseLeavingTimeScheduled);
 
             tripVoucher.setBaseReturnTimeScheduled(baseReturnTimeScheduled);
@@ -318,7 +318,7 @@ public class PlannedRouteFactory {
         //    arrivalTimeDifference = arrivalTimeDifference.replace("'", "");
         // }
 
-        return new TripPeriod(tripPeriodType, startTimeScheduled, arrivalTimeScheduled);
+        return new TripPeriod(tripPeriodType, startTimeScheduled, null, null, arrivalTimeScheduled, null, null);
     }
 
     private TripPeriod createTripPeriodFromRightSide(HashMap<String, String> data, int rowIndex, String tripPeriodType) {
@@ -343,6 +343,6 @@ public class PlannedRouteFactory {
         // if (arrivalTimeDifference != null && arrivalTimeDifference.contains("'")) {
         //   arrivalTimeDifference = arrivalTimeDifference.replace("'", "");
         //}
-        return new TripPeriod(tripPeriodType, startTimeScheduled, arrivalTimeScheduled);
+        return new TripPeriod(tripPeriodType, startTimeScheduled, null, null, arrivalTimeScheduled, null, null);
     }
 }

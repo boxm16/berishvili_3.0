@@ -316,9 +316,9 @@
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                     <div class="container-fluid">
-                      
+                        <div></div>
                         <center>
-                            ${plannedRoutesPager.getDisplay()}
+                            <h2> დაგეგმილი მარშრუტები</h2>
                         </center>
 
                         <button type="button" class="btn btn-warning">
@@ -338,7 +338,7 @@
                         </tr>
                     </thead>
                     <tbody id="body">
-                        <tr>
+                        <tr style="background-color:lightgreen">
                             <td colspan='16' align="center">
                                 მარშრუტ #: ${plannedRoutes.number}
                             </td>
@@ -357,7 +357,7 @@
                                 </tr>
                                 <c:forEach var="tripVoucher" items="${exodus.value.tripVouchers}">
 
-                                    <tr>
+                                    <tr style="background-color:lightblue">
                                         <td colspan='3' align="center">
                                             მარშრუტა #: ${plannedRoutes.number}.
                                             თარიღი: ${day.value.dateStamp}.
