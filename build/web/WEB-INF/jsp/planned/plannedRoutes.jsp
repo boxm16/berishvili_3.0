@@ -370,9 +370,9 @@
                                         <tr>
 
 
-                                            <td align="center">${tripPeriod.getStartTimeString()} </td>
+                                            <td align="center">${tripPeriod.getStartTimeScheduledString()} </td>
                                             <td align="center">${tripPeriod.typeG} </td>
-                                            <td align="center">${tripPeriod.getArrivalTimeString()} </td>
+                                            <td align="center">${tripPeriod.getArrivalTimeScheduledString()} </td>
 
                                         </tr>
                                     </c:forEach>
