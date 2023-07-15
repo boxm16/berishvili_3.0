@@ -111,18 +111,26 @@ public class TripPeriod {
     }
 
     public String getStartTimeScheduledString() {
+
         return startTimeScheduled.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
     public String getStartTimeActualString() {
+        if (startTimeActual == null) {
+            return "";
+        }
         return startTimeActual.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
     public String getArrivalTimeScheduledString() {
+
         return arrivalTimeScheduled.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
     public String getArrivalTimeActualString() {
+        if (arrivalTimeActual == null) {
+            return "";
+        }
         return arrivalTimeActual.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
