@@ -6,7 +6,6 @@
 package Index;
 
 import BasicModels.Route;
-import Service.IndexDates;
 import java.util.Date;
 import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndxController {
 
     @Autowired
-    private IndexDates indexDates;
+    private IndxDates indexDates;
 
-    
+    @Autowired
+    private IndxDao indxDao;
 
     @RequestMapping(value = "index")
     public String index(ModelMap model) {
 
-//        TreeMap<String, Route> routes = indxDao.getPlannedRoutes();
-        TreeMap<String, Route> routes = new TreeMap<>();
-        
+        TreeMap<String, Route> routes = indxDao.getActualRoutes();
+        //   TreeMap<String, Route> routes = new TreeMap<>();
+
         TreeMap<Date, IndxDate> dates = this.indexDates.getIndexDates(routes);
         model.addAttribute("routes", routes);
         model.addAttribute("dates", dates);
         return "index";
     }
 
-    
 }

@@ -1,5 +1,6 @@
-package Service;
+package Index;
 
+import Service.*;
 import BasicModels.Day;
 import BasicModels.Route;
 import Index.IndxDate;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IndexDates {
+public class IndxDates {
 
     @Autowired
     private Converter converter;

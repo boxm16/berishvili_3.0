@@ -416,8 +416,9 @@
 
                             function ajax(routeNumber) {
                                 $("#body").html("");
+                                                                $("#body").html("<tr><td colspan='5'><center><h3> დაელოდე, მონაცემები იტვირთება...</h3></center></td></tr>")
                                 $.ajax({
-                                    url: 'requestRoute.htm?number=' + routeNumber,
+                                    url: 'requestPlannedRoute.htm?number=' + routeNumber,
                                     //  contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 
                                     success: function (status) {

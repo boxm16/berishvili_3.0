@@ -6,7 +6,7 @@ import BasicModels.Route;
 import BasicModels.TripPeriod;
 import BasicModels.TripVoucher;
 import Index.IndxDate;
-import Service.IndexDates;
+import Index.IndxDates;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -27,7 +27,7 @@ public class PlannedRouteController {
     LinkedHashMap<String, ArrayList<String>> routesDates;
     
     @Autowired
-    private IndexDates indexDates;
+    private IndxDates indexDates;
 
     @Autowired
     private PlannedRouteDao plannedRouteDao;
@@ -55,9 +55,9 @@ public class PlannedRouteController {
         return "planned/plannedRoutes";
     }
 
-    @RequestMapping(value = "/requestRoute", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/requestPlannedRoute", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
     public @ResponseBody
-    String getTimeX(@RequestParam("number") String requestedRouteNumber) {
+    String requestPlannedRoute(@RequestParam("number") String requestedRouteNumber) {
         System.out.println(requestedRouteNumber);
         StringBuilder response = new StringBuilder();
         response.append("<tr style=\"background-color:lightgreen\"'><td colspan='3' align=\"center\">მარშრუტი #:" + requestedRouteNumber + "</td></tr> ");
@@ -121,7 +121,7 @@ public class PlannedRouteController {
         //trimming and cleaning input
         requestedRoutesDates = requestedRoutesDates.trim();
         if (requestedRoutesDates.length() == 0) {
-            return null;
+            return routesDates;
         }
         if (requestedRoutesDates.substring(requestedRoutesDates.length() - 1, requestedRoutesDates.length()).equals(",")) {
             requestedRoutesDates = requestedRoutesDates.substring(0, requestedRoutesDates.length() - 1).trim();

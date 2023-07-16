@@ -229,7 +229,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                     <div class="container-fluid">
 
-                        <a class="btn btn-primary" href="#goForActualDataUpload.htm" style="font-size: 20px">ახალი მონაცემების ატვირთვა</a>
+                        <a class="btn btn-primary" href="goForNewActualDataUpload.htm" style="font-size: 20px">ახალი მონაცემების ატვირთვა</a>
 
 
                         <div style="margin-left: 5%;"> 
@@ -330,15 +330,26 @@
             </div>
             <nav id="sidebar">
                 <div class="sidebar-header" style="background-color: green">
-                    <h3> <a href="http://ec2-34-245-183-24.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>
+                    <h3> <a href="http://ec2-34-242-152-35.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>
                 </div>
                 <div class="sidebar-header">
                     <!--- <h3>ფუნქციები</h3> ---->
                 </div>
-
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="#detailedRoutesSubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>ბრუნები დეტალურად</h3></a>
+                        <ul class="collapse list-unstyled" id="detailedRoutesSubmenue">
+                            <li>
+                                <a href="#" onclick="requestRouter('detailedRoutes.htm')"><h4>დათვალიერება</h4></a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="requestRouter('detailedRoutesExcelExportDashboardInitialRequest.htm')"><h4>ექსელში ექსპორტი</h4></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
                 <ul class="list-unstyled CTAs">
-
                     <li>
                         <a href="routes.htm" target="_blank"><h3>მარშრუტები</h3></a>
                     </li>
@@ -348,9 +359,7 @@
                     <li>
                         <a href="techMan.htm"><h3>techMan</h3></a>
                     </li>
-                       <li>
-                        <a href="goForNewActualDataUpload.htm"><h3>ACTUAL DATA UPLOAD</h3></a>
-                    </li>
+                    
                 </ul>
 
             </nav>

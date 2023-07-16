@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>დაგეგმილი ბრუნები</title>
+        <title>ბრუნები დეტალურად</title>
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
@@ -169,7 +169,7 @@
                 z-index: 1;
                 top: 0;
                 left: 0;
-                background-color: green;
+                background-color: blue;
                 overflow-x: hidden;
                 padding-top: 20px;
             }
@@ -318,11 +318,11 @@
                     <div class="container-fluid">
                         <div></div>
                         <center>
-                            <h2> დაგეგმილი მარშრუტები</h2>
+                            <h2> ბრუნები დეტალურად</h2>
                         </center>
 
                         <button type="button" class="btn btn-warning">
-                            <span> <a href="plannedRoutesExcelExportDashboard.htm">ექსელში ექსპორტი</a> </span>
+                            <span> <a href="#detailedRouteExcelExportDashboard.htm">ექსელში ექსპორტი</a> </span>
                         </button>
 
                     </div>
@@ -331,21 +331,26 @@
                 <table id="mainTable" >
                     <thead>
                         <tr>
-                            <th>გასვლის დრო</th>
+                            <th>გეგმიუირი<br>გასვლის<br>დრო</th>
+                            <th>ფაქტიური<br>გასვლის<br>დრო</th>
+
                             <th>მიმართულება</th>
-                            <th>მისვლის დრო</th>
+
+                            <th>გეგმიუირი<br>მისვლის<br>დრო</th>
+                            <th>ფაქტიური<br>მისვლის<br>დრო</th>
+
 
                         </tr>
                     </thead>
                     <tbody id="body">
                         <tr style="background-color:lightgreen">
                             <td colspan='16' align="center">
-                                მარშრუტ #: ${plannedRoutes.number}
+                                მარშრუტ #: ${detailedRoute.number}
                             </td>
                         </tr>
-                        <c:forEach var="day" items="${plannedRoutes.days}">
+                        <c:forEach var="day" items="${detailedRoute.days}">
                             <tr style="background-color:#4863A0">
-                                <td colspan='3' align="center">
+                                <td colspan='16' align="center">
                                     თარიღი: ${day.value.getDateStamp()}
                                 </td>
                             </tr>
@@ -358,8 +363,8 @@
                                 <c:forEach var="tripVoucher" items="${exodus.value.tripVouchers}">
 
                                     <tr style="background-color:lightblue">
-                                        <td colspan='3' align="center">
-                                            მარშრუტა #: ${plannedRoutes.number}.
+                                        <td colspan='16' align="center">
+                                            მარშრუტა #: ${detailedRoute.number}.
                                             თარიღი: ${day.value.dateStamp}.
                                             გასვლა #: ${exodus.value.number}.
                                             საგზურის  #: ${tripVoucher.value.number}.
@@ -371,8 +376,12 @@
 
 
                                             <td align="center">${tripPeriod.getStartTimeScheduledString()} </td>
+                                            <td align="center">${tripPeriod.getStartTimeActualString()} </td>
+
                                             <td align="center">${tripPeriod.typeG} </td>
+
                                             <td align="center">${tripPeriod.getArrivalTimeScheduledString()} </td>
+                                            <td align="center">${tripPeriod.getArrivalTimeActualString()} </td>
 
                                         </tr>
                                     </c:forEach>
@@ -384,7 +393,7 @@
                 <hr>
                 <center>
 
-                    ${plannedRoutesPager.display}
+
 
                 </center>
                 <hr>
@@ -402,6 +411,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
+
                             $(document).ready(function () {
                                 $("#sidebar").mCustomScrollbar({
                                     theme: "minimal"
@@ -411,19 +421,22 @@
                                     $('.collapse.in').toggleClass('in');
                                     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
                                 });
+
                             });
+
+                            // ajax(${detailedRouteNumber});
                             //------------------------------------------------------
 
                             function ajax(routeNumber) {
                                 $("#body").html("");
-                                                                $("#body").html("<tr><td colspan='5'><center><h3> დაელოდე, მონაცემები იტვირთება...</h3></center></td></tr>")
+                                $("#body").html("<tr><td colspan='5'><center><h3> დაელოდე, მონაცემები იტვირთება...</h3></center></td></tr>")
                                 $.ajax({
-                                    url: 'requestPlannedRoute.htm?number=' + routeNumber,
+                                    url: 'requestDetailedRoute.htm?number=' + routeNumber,
                                     //  contentType: "application/x-www-form-urlencoded;charset=UTF-8",
 
                                     success: function (status) {
                                         $("#body").html(status);
-                                        console.log(status)
+                                        // console.log(status)
                                     }
                                 });
                             }
