@@ -38,8 +38,8 @@ public class DetailedRouteController {
         }
 
         model.addAttribute("routeNumbers", this.routesDates.keySet());
-        model.addAttribute("detailedRoute", detailedRoute);
-        //model.addAttribute("detailedRouteNumber", detailedRoute.getNumber());
+        //model.addAttribute("detailedRoute", detailedRoute);
+        model.addAttribute("detailedRouteNumber", detailedRoute.getNumber());
         return "detailed/detailedRoutes";
     }
 

@@ -347,6 +347,16 @@
                             </li>
                         </ul>
                     </li>
+                    
+                    <li>
+                        <a href="#analysisSubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>ანალიზი</h3></a>
+                        <ul class="collapse list-unstyled" id="analysisSubmenue">
+                            <li>
+                                <a href="#" onclick="requestRouter('analysis.htm')"><h4>დათვალიერება</h4></a>
+                            </li>
+                           
+                        </ul>
+                    </li>
                 </ul>
 
                 <ul class="list-unstyled CTAs">

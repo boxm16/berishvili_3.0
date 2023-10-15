@@ -424,7 +424,7 @@
 
                             });
 
-                            // ajax(${detailedRouteNumber});
+                             ajax(${detailedRouteNumber});
                             //------------------------------------------------------
 
                             function ajax(routeNumber) {

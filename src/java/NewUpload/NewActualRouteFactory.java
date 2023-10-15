@@ -121,7 +121,13 @@ public class NewActualRouteFactory {
         String tripVoucherNumberLocationInTheRow = new StringBuilder("H").append(String.valueOf(rowIndex)).toString();
         String tripVoucherNumber = data.remove(tripVoucherNumberLocationInTheRow);
         //  System.out.println("TripVoucherNumber at reading: " + tripVoucherNumber);
-
+       
+        String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
+        String shift = data.remove(shiftLocationInTheRow);
+        if (shift.contains(".")) {
+            tripVoucherNumber = tripVoucherNumber + ":" + shift;
+        }
+        
         TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
         TripVoucher tripVoucher;
         if (tripVouchers.containsKey(tripVoucherNumber)) {
@@ -144,9 +150,7 @@ public class NewActualRouteFactory {
             String driverName = data.remove(driverNameLocationInTheRow);
             //   System.out.println("DriverName: " + driverName);
 
-            String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
-            String shift = data.remove(shiftLocationInTheRow);
-            //System.out.println("Shift: " + shift);
+           
 
             String tripPeriodsScheduledTotalLocationInTheRow = new StringBuilder("S").append(String.valueOf(rowIndex)).toString();
             String tripPeriodsScheduledTotalString = data.remove(tripPeriodsScheduledTotalLocationInTheRow);

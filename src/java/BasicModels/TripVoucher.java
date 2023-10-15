@@ -1,6 +1,9 @@
 package BasicModels;
 
+import Service.Converter;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TripVoucher {
@@ -27,7 +30,7 @@ public class TripVoucher {
     private int tripPeriodsActualTotal;
     private float kilometrageScheduled;
     private float kilometrageActual;
-    
+
     private String note;
 
     public TripVoucher() {
@@ -185,6 +188,39 @@ public class TripVoucher {
     public void setNote(String note) {
         this.note = note;
     }
+//---------------------------------------------
 
+    public String getBaseLeavingTimeActualString() {
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return this.baseLeavingTimeActual.format(dateTimeFormatter);
+    }
+
+    public String getBaseReturnTimeActualString() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return this.baseReturnTimeActual.format(dateTimeFormatter);
+    }
+
+    public String getBaseReturnTimeVerifiedString() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        if (this.baseReturnTimeRedacted == null) {
+            return this.baseReturnTimeActual.format(dateTimeFormatter);
+        } else {
+            return this.baseReturnTimeRedacted.format(dateTimeFormatter);
+        }
+    }
+
+    public String getWorkedHoursVerifiedString() {
+        LocalDateTime baseReturnTimeVerified;
+        if (this.baseReturnTimeRedacted == null) {
+            baseReturnTimeVerified = this.baseReturnTimeActual;
+        } else {
+            baseReturnTimeVerified = baseReturnTimeRedacted;
+        }
+        Duration workingHours = Duration.between(this.baseLeavingTimeActual, baseReturnTimeVerified);
+        Converter converter = new Converter();
+        return converter.convertDurationToString(workingHours);
+
+    }
 
 }
