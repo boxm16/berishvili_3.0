@@ -133,8 +133,9 @@ public class PlannedRouteFactory {
             String driverName = data.remove(driverNameLocationInTheRow);
 
             String tripPeriodsTotalLocationInTheRow = new StringBuilder("S").append(String.valueOf(rowIndex)).toString();
-            String tripPeriodsTotalString = data.remove(tripPeriodsTotalLocationInTheRow);
-            int tripPeriodsTotal = Integer.parseInt(tripPeriodsTotalString);
+            System.out.println(tripPeriodsTotalLocationInTheRow);
+            float tripPeriodsTotalF = Float.parseFloat(data.remove(tripPeriodsTotalLocationInTheRow));
+            int tripPeriodsTotal = (int) tripPeriodsTotalF;
 
             String kilometrageLocationInTheRow = new StringBuilder("Q").append(String.valueOf(rowIndex)).toString();
             float kilometrage = Float.parseFloat(data.remove(kilometrageLocationInTheRow));
