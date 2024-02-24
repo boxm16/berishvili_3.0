@@ -96,7 +96,7 @@ public class NewActualRouteFactory {
         String exodusNumberLocationInTheRow = new StringBuilder("J").append(String.valueOf(rowIndex)).toString();
         short exodusNumber = Float.valueOf(data.remove(exodusNumberLocationInTheRow)).shortValue();
 
-        TreeMap<Short, Exodus> exoduses = day.getExoduses();
+        TreeMap<Short, Exodus> exoduses = day.getActualExoduses();
         Exodus exodus;
         if (exoduses.containsKey(exodusNumber)) {
             exodus = exoduses.get(exodusNumber);
@@ -107,7 +107,7 @@ public class NewActualRouteFactory {
 
         exodus = addRowElementsToExodus(exodus, data, rowIndex);
         exoduses.put(exodusNumber, exodus);
-        day.setExoduses(exoduses);
+        day.setActualExoduses(exoduses);
         return day;
     }
 
@@ -121,13 +121,13 @@ public class NewActualRouteFactory {
         String tripVoucherNumberLocationInTheRow = new StringBuilder("H").append(String.valueOf(rowIndex)).toString();
         String tripVoucherNumber = data.remove(tripVoucherNumberLocationInTheRow);
         //  System.out.println("TripVoucherNumber at reading: " + tripVoucherNumber);
-       
+
         String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
         String shift = data.remove(shiftLocationInTheRow);
         if (shift.contains(".")) {
-            tripVoucherNumber = tripVoucherNumber + ":" + shift;
+            tripVoucherNumber = tripVoucherNumber + "@" + shift;
         }
-        
+
         TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
         TripVoucher tripVoucher;
         if (tripVouchers.containsKey(tripVoucherNumber)) {
@@ -149,8 +149,6 @@ public class NewActualRouteFactory {
             String driverNameLocationInTheRow = new StringBuilder("F").append(String.valueOf(rowIndex)).toString();
             String driverName = data.remove(driverNameLocationInTheRow);
             //   System.out.println("DriverName: " + driverName);
-
-           
 
             String tripPeriodsScheduledTotalLocationInTheRow = new StringBuilder("S").append(String.valueOf(rowIndex)).toString();
             String tripPeriodsScheduledTotalString = data.remove(tripPeriodsScheduledTotalLocationInTheRow);

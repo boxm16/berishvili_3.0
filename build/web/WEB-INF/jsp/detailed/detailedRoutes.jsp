@@ -364,10 +364,10 @@
 
                                     <tr style="background-color:lightblue">
                                         <td colspan='16' align="center">
-                                            მარშრუტა #: ${detailedRoute.number}.
-                                            თარიღი: ${day.value.dateStamp}.
-                                            გასვლა #: ${exodus.value.number}.
-                                            საგზურის  #: ${tripVoucher.value.number}.
+                                            მარშრუტა #: ${detailedRoute.number}
+                                            თარიღი: ${day.value.dateStamp}
+                                            გასვლა #: ${exodus.value.number}
+                                            საგზურის  #: ${tripVoucher.value.number}
 
                                         </td>
                                     </tr>

@@ -349,6 +349,16 @@
                     </li>
                     
                     <li>
+                        <a href="#guarantySubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>საგარანტიო</h3></a>
+                        <ul class="collapse list-unstyled" id="guarantySubmenue">
+                            <li>
+                                <a href="#" onclick="requestRouter('guarantyTrips.htm')"><h4>დათვალიერება</h4></a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    
+                    <li>
                         <a href="#analysisSubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>ანალიზი</h3></a>
                         <ul class="collapse list-unstyled" id="analysisSubmenue">
                             <li>

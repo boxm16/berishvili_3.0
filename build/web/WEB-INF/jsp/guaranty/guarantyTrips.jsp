@@ -1,23 +1,17 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ბრუნები დეტალურად</title>
+        <title>საგარანტიო გასვლები</title>
         <!-- Bootstrap CSS CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-        <!-- Font Awesome JS -->
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
         <style>
 
             /*
-        DEMO STYLE
+       !!!!!!!!! this is copied from tripPeriods.jsp and then changed, dont have this for reference !!!!!!!!!!!!
             */
 
             @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
@@ -74,7 +68,7 @@
             }
 
             #sidebar {
-                width: 150px;
+                width: 20px;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -86,7 +80,7 @@
             }
 
             #sidebar.active {
-                margin-left: -150px;
+                margin-left: -20px;
             }
 
             #sidebar .sidebar-header {
@@ -162,30 +156,12 @@
                 color: #fff !important;
             }
 
-            .sidenav {
-                height: 100%;
-                width: 160px;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                background-color: blue;
-                overflow-x: hidden;
-                padding-top: 20px;
-            }
-
-
-
-            .sidenav button:hover {
-                background-color: red;
-            }
-
             /* ---------------------------------------------------
                 CONTENT STYLE
             ----------------------------------------------------- */
 
             #content {
-                width: calc(100% - 150px);
+                width: calc(100% - 20px);
                 padding: 5px;
                 min-height: 100vh;
                 transition: all 0.3s;
@@ -229,7 +205,6 @@
 
             tr td {
                 border:solid black 1px;
-
             }
             /* ---------------------------------------------------
             for sticky header for table
@@ -237,7 +212,6 @@
             /* Fixed Headers */
 
             th {
-                text-align: center;
                 position: -webkit-sticky;
                 position: sticky;
                 top: 40px;
@@ -260,7 +234,7 @@
             }
             th {
                 vertical-align: bottom;
-                background-color: blue;
+                background-color: #4AE537;
                 color: #fff;
                 border:solid black 1px;
             }
@@ -291,118 +265,79 @@
 
             .pagination a:hover:not(.active) {background-color: #ddd;}
 
-
         </style>
-        <script type="text/javascript"
-        src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     </head>
     <body>
         <div class="wrapper">
-            <!-- Sidebar  -->
-            <div class="sidenav">
-
-                <c:forEach var="routeNumber" items="${routeNumbers}"  >
-                    <center>
-                        <button style='font-size: 20px; width:60px; border-radius: 50%;' class="btn btn-warning" onclick="ajax(${routeNumber})"> ${routeNumber}</button>
-                    </center>
-                    <br>
-
-                </c:forEach>
-
-            </div>
-
-            <!-- Page Content  -->
+            <!-- hre goes sidebar, if i ever need it -->
             <div id="content">
-
                 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                     <div class="container-fluid">
-                        <div></div>
-                        <center>
-                            <h2> ბრუნები დეტალურად</h2>
-                        </center>
-
+                        <div>
+                            <span><!-- this div is just to maintain centered the next text --> </span>
+                        </div>
+                        <center><h2>საგარანტიო გასვლები</h2></center>
                         <button type="button" class="btn btn-warning">
-                            <span> <a href="#detailedRouteExcelExportDashboard.htm">ექსელში ექსპორტი</a> </span>
+                            <span> <a href="guarantyTripsExcelExportDashboard.htm">ექსელში ექსპორტი</a> </span>
                         </button>
-
                     </div>
                 </nav>
 
-                <table id="mainTable" >
+                <!-- <a href="guarantyExplanation.htm" target="_blank">განმარტება</a> -->
+
+                <table>
                     <thead>
-                        <tr>
-                            <th>გეგმიუირი<br>გასვლის<br>დრო</th>
-                            <th>ფაქტიური<br>გასვლის<br>დრო</th>
+                        <tr>   
+                            <th>თარიღი</th>
+                            <th>ა/ბაზა</th>
+                            <th>მარშ. #</th>
 
+                            <th>"A" პუნქტი</th>
+                            <th>"Β" პუნქტი</th>
                             <th>მიმართულება</th>
+                            <th>საგარანტიო<br>გასვლის<br>ტიპი</th>
 
-                            <th>გეგმიუირი<br>მისვლის<br>დრო</th>
-                            <th>ფაქტიური<br>მისვლის<br>დრო</th>
+                            <th>გეგმიური<br>გასვლის<br>დრო</th>
+                            <th>ფაქტიური<br>გასვლის<br>დრო</th>
+                            <th>სხვაობა</th>
 
+                            <th>გეგმიური<br>გასვლის<br>ნომერი</th>
+                            <th>ფაქტიური<br>გასვლის<br>ნომერი</th>
+
+                            <th>ფაქტიური<br>გასვლის<br>მძღოლი</th>
+                            <th>ფაქტიური<br>გასვლის<br>სახ. ნომერი</th>
 
                         </tr>
                     </thead>
-                    <tbody id="body">
-                        <tr style="background-color:lightgreen">
-                            <td colspan='16' align="center">
-                                მარშრუტ #: ${detailedRoute.number}
-                            </td>
-                        </tr>
-                        <c:forEach var="day" items="${detailedRoute.days}">
-                            <tr style="background-color:#4863A0">
-                                <td colspan='16' align="center">
-                                    თარიღი: ${day.value.getDateStamp()}
-                                </td>
+                    <tbody>
+                        <c:forEach var="guarantyTripPeriod" items="${guarantyData}" varStatus="loop">
+
+                            <tr style="background-color: ${loop.index%2==0?"inherited":"lightgrey"}">
+                                <td  style="width: 100px;" align="center">${guarantyTripPeriod.dateStamp}</td>
+                                <td align="center">${guarantyTripPeriod.baseNumber}</td>
+                                <td align="center">${guarantyTripPeriod.routeNumber}</td>
+                                <td align="center">${guarantyTripPeriod.aPoint}</td>
+                                <td align="center">${guarantyTripPeriod.bPoint}</td>
+
+                                <td align="center">${guarantyTripPeriod.getTypeG()}</td>
+                                <td align="center">${guarantyTripPeriod.guarantyType}</td>
+
+                                <td align="center">${guarantyTripPeriod.startTimeScheduledString}</td>
+                                <td align="center">${guarantyTripPeriod.startTimeActualString}</td>
+                               <td align="center">${guarantyTripPeriod.getGuarantyStartTimeDifferenceString()}</td>
+                                <td align="center">${guarantyTripPeriod.plannedExodusNumber}</td>
+                                <td align="center">${guarantyTripPeriod.actualExodusNumber}</td>
+
                             </tr>
-                            <c:forEach var="exodus" items="${day.value.exoduses}">
-                                <tr style="background-color:lightblue">
-                                    <td colspan='16' align="center">
-                                        გასვლა #: ${exodus.value.number}
-                                    </td>
-                                </tr>
-                                <c:forEach var="tripVoucher" items="${exodus.value.tripVouchers}">
-
-                                    <tr style="background-color:lightblue">
-                                        <td colspan='16' align="center">
-                                            მარშრუტა #: ${detailedRoute.number}
-                                            თარიღი: ${day.value.dateStamp}
-                                            გასვლა #: ${exodus.value.number}
-                                            საგზურის  #: ${tripVoucher.value.number}
-
-                                        </td>
-                                    </tr>
-                                    <c:forEach var="tripPeriod" items="${tripVoucher.value.tripPeriods}">
-                                        <tr>
 
 
-                                            <td align="center">${tripPeriod.getStartTimeScheduledString()} </td>
-                                            <td align="center">${tripPeriod.getStartTimeActualString()} </td>
-
-                                            <td align="center">${tripPeriod.typeG} </td>
-
-                                            <td align="center">${tripPeriod.getArrivalTimeScheduledString()} </td>
-                                            <td align="center">${tripPeriod.getArrivalTimeActualString()} </td>
-
-                                        </tr>
-                                    </c:forEach>
-                                </c:forEach>
-                            </c:forEach>
                         </c:forEach>
                     </tbody>
                 </table>
-                <hr>
-                <center>
-
-
-
-                </center>
-                <hr>
-
             </div>
         </div>
-
-        <!-- jQuery CDN -  -->
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <!-- Popper.JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <!-- Bootstrap JS -->
@@ -410,37 +345,6 @@
         <!-- jQuery Custom Scroller CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-        <script type="text/javascript">
-
-                            $(document).ready(function () {
-                                $("#sidebar").mCustomScrollbar({
-                                    theme: "minimal"
-                                });
-                                $('#sidebarCollapse').on('click', function () {
-                                    $('#sidebar, #content').toggleClass('active');
-                                    $('.collapse.in').toggleClass('in');
-                                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                                });
-
-                            });
-
-                             ajax(${detailedRouteNumber});
-                            //------------------------------------------------------
-
-                            function ajax(routeNumber) {
-                                $("#body").html("");
-                                $("#body").html("<tr><td colspan='5'><center><h3> დაელოდე, მონაცემები იტვირთება...</h3></center></td></tr>")
-                                $.ajax({
-                                    url: 'requestDetailedRoute.htm?number=' + routeNumber,
-                                    //  contentType: "application/x-www-form-urlencoded;charset=UTF-8",
-
-                                    success: function (status) {
-                                        $("#body").html(status);
-                                        // console.log(status)
-                                    }
-                                });
-                            }
-
-        </script>                           
     </body>
 </html>
+

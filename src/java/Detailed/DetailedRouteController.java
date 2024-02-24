@@ -54,12 +54,12 @@ public class DetailedRouteController {
         TreeMap<String, Day> days = plannedRoute.getDays();
         for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
             response.append("<tr style=\"background-color:#4863A0\"> <td colspan='16' align=\"center\">თარიღი:").append(dayEntry.getValue().getDateStamp()).append("</td></tr>");
-            TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+            TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getActualExoduses();
             for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
                 response.append("<tr style=\"background-color:lightblue\"><td colspan='16' align=\"center\">გასვლა #:").append(exodusEntry.getValue().getNumber()).append("</td></tr>");
                 TreeMap<String, TripVoucher> tripVouchers = exodusEntry.getValue().getTripVouchers();
                 for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {
-                    response.append("<tr style=\"background-color:lightblue\"><td colspan='16' align=\"center\">მარშრუტი#:").append(requestedRouteNumber).append(". თარიღი:").append(dayEntry.getValue().getDateStamp()).append(". გასვლა#:").append(exodusEntry.getValue().getNumber()).append(". საგზურის #:").append(tripVoucherEntry.getValue().getNumber()).append(".</td></tr>");
+                    response.append("<tr style=\"background-color:lightblue\"><td colspan='16' align=\"center\">მარშრუტი#:").append(requestedRouteNumber).append(". თარიღი:").append(dayEntry.getValue().getDateStamp()).append(". გასვლა#:").append(exodusEntry.getValue().getNumber()).append(". საგზურის #:").append(tripVoucherEntry.getValue().getNumber()).append("</td></tr>");
                     ArrayList<TripPeriod> tripPeriods = tripVoucherEntry.getValue().getTripPeriods();
                     for (TripPeriod tripPeriod : tripPeriods) {
                         response.append("<tr>").

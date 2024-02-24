@@ -5,6 +5,7 @@
  */
 package Service;
 
+import NewUpload.RequestData;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,39 @@ public class RequestDataDecoder {
 
         }
         return routesDates;
+    }
+
+    public RequestData getRequestedData(String requestedRoutesDates) {
+        RequestData requestData = new RequestData();
+
+        //trimming and cleaning input
+        requestedRoutesDates = requestedRoutesDates.trim();
+        if (requestedRoutesDates.length() == 0) {
+            return requestData;
+        }
+        if (requestedRoutesDates.substring(requestedRoutesDates.length() - 1, requestedRoutesDates.length()).equals(",")) {
+            requestedRoutesDates = requestedRoutesDates.substring(0, requestedRoutesDates.length() - 1).trim();
+        }
+        String[] routeDatesArray = requestedRoutesDates.split(",");
+        for (String routeDate : routeDatesArray) {
+
+            String[] routeDateArray = routeDate.split(":");
+            String routeNumber = routeDateArray[0];
+            String dateStamp = routeDateArray[1];
+
+            ArrayList<String> dateStamps;
+
+            if (requestData.getRoutes().contains(routeNumber)) {
+            } else {
+                requestData.getRoutes().add(routeNumber);
+            }
+
+            if (requestData.getDates().contains(dateStamp)) {
+            } else {
+                requestData.getDates().add(dateStamp);
+            }
+
+        }
+        return requestData;
     }
 }

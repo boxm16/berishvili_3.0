@@ -22,6 +22,11 @@ public class TripPeriod {
     private LocalDateTime arrivalTimeScheduled;
     private LocalDateTime arrivalTimeActual;
     private String arrivalTimeDifference;
+    
+    private short exoudsNumber;
+
+    public TripPeriod() {
+    }
 
     public TripPeriod(String type, LocalDateTime startTimeScheduled, LocalDateTime startTimeActual, String startTimeDifference, LocalDateTime arrivalTimeScheduled, LocalDateTime arrivalTimeActual, String arrivalTimeDifference) {
         this.type = type;
@@ -134,4 +139,14 @@ public class TripPeriod {
         return arrivalTimeActual.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
     }
 
+    public short getExoudsNumber() {
+        return exoudsNumber;
+    }
+
+    public void setExoudsNumber(short exoudsNumber) {
+        this.exoudsNumber = exoudsNumber;
+    }
+
+    
+    
 }

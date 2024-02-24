@@ -84,7 +84,7 @@ public class PlannedRouteFactory {
         String exodusNumberLocationInTheRow = new StringBuilder("J").append(String.valueOf(rowIndex)).toString();
         short exodusNumber = Float.valueOf(data.remove(exodusNumberLocationInTheRow)).shortValue();
 
-        TreeMap<Short, Exodus> exoduses = day.getExoduses();
+        TreeMap<Short, Exodus> exoduses = day.getPlannedExoduses();
         Exodus exodus;
         if (exoduses.containsKey(exodusNumber)) {
             exodus = exoduses.get(exodusNumber);
@@ -95,7 +95,7 @@ public class PlannedRouteFactory {
 
         exodus = addRowElementsToExodus(exodus, data, rowIndex);
         exoduses.put(exodusNumber, exodus);
-        day.setExoduses(exoduses);
+        day.setPlannedExoduses(exoduses);
         return day;
     }
 
@@ -106,6 +106,14 @@ public class PlannedRouteFactory {
 
         String tripVoucherNumberLocationInTheRow = new StringBuilder("H").append(String.valueOf(rowIndex)).toString();
         String tripVoucherNumber = data.remove(tripVoucherNumberLocationInTheRow);
+
+        String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
+        String shift = data.remove(shiftLocationInTheRow);
+
+        if (shift.contains(".")) {
+            tripVoucherNumber = tripVoucherNumber + "@" + shift;
+        }
+
         TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
         TripVoucher tripVoucher;
         if (tripVouchers.containsKey(tripVoucherNumber)) {
@@ -123,9 +131,6 @@ public class PlannedRouteFactory {
 
             String driverNameLocationInTheRow = new StringBuilder("F").append(String.valueOf(rowIndex)).toString();
             String driverName = data.remove(driverNameLocationInTheRow);
-
-            String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
-            String shift = data.remove(shiftLocationInTheRow);
 
             String tripPeriodsTotalLocationInTheRow = new StringBuilder("S").append(String.valueOf(rowIndex)).toString();
             float tripPeriodsTotalF = Float.parseFloat(data.remove(tripPeriodsTotalLocationInTheRow));

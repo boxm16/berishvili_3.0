@@ -53,7 +53,7 @@ public class ActualDataUploadDao {
                 TreeMap<String, Day> days = routeEntry.getValue().getDays();
                 for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
                     String dateStamp = dayEntry.getValue().getDateStamp();
-                    TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+                    TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getActualExoduses();
                     for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
                         TreeMap<String, TripVoucher> tripVouchers = exodusEntry.getValue().getTripVouchers();
                         for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {
@@ -115,8 +115,8 @@ public class ActualDataUploadDao {
             LocalTime now3 = LocalTime.now();
             System.out.println(now2 + ": TripVoucherInsertion Batch DONE, STARTING TripPeriodInsertion Batch:....");
             tripPeriodInsertionPreparedStatement.executeBatch();
-             LocalTime now4 = LocalTime.now();
-            System.out.println(now4+": Batch Insertion: DONE");
+            LocalTime now4 = LocalTime.now();
+            System.out.println(now4 + ": Batch Insertion: DONE");
 
             //Saving the changes
             connection.commit();

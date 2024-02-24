@@ -59,7 +59,7 @@ public class TechManDao {
         }
     }
 
-    String createPlannedTripVoucherTable() {
+    public String createPlannedTripVoucherTable() {
         String sql = "CREATE TABLE `planned_trip_voucher` ("
                 + "`number` VARCHAR(20) NOT NULL, "
                 + "`route_number` VARCHAR(10) NOT NULL, "
@@ -102,7 +102,7 @@ public class TechManDao {
         }
     }
 
-    String createPlannedTripPeriodTable() {
+    public String createPlannedTripPeriodTable() {
         String sql = "CREATE TABLE `planned_trip_period` ("
                 + "`trip_voucher_number` VARCHAR(20) NOT NULL, "
                 + "`type` VARCHAR(15) NOT NULL, "
@@ -133,7 +133,7 @@ public class TechManDao {
         }
     }
 
-    String deletePlannedTripPeriodTable() {
+    public String deletePlannedTripPeriodTable() {
         try {
             connection = dataBaseConnection.getConnection();
             Statement statement = connection.createStatement();
@@ -146,7 +146,7 @@ public class TechManDao {
         return "Table planned_trip_period deleted successfully";
     }
 
-    String deletePlannedTripVoucherTable() {
+    public String deletePlannedTripVoucherTable() {
         try {
             connection = dataBaseConnection.getConnection();
             Statement statement = connection.createStatement();
@@ -281,5 +281,6 @@ public class TechManDao {
         }
         return "Table trip_period deleted successfully";
     }
+    
 
 }

@@ -349,7 +349,7 @@
                                     თარიღი: ${day.value.getDateStamp()}
                                 </td>
                             </tr>
-                            <c:forEach var="exodus" items="${day.value.exoduses}">
+                            <c:forEach var="exodus" items="${day.value.plannedExoduses}">
                                 <tr style="background-color:lightblue">
                                     <td colspan='16' align="center">
                                         გასვლა #: ${exodus.value.number}
@@ -359,10 +359,10 @@
 
                                     <tr style="background-color:lightblue">
                                         <td colspan='3' align="center">
-                                            მარშრუტა #: ${plannedRoutes.number}.
-                                            თარიღი: ${day.value.dateStamp}.
-                                            გასვლა #: ${exodus.value.number}.
-                                            საგზურის  #: ${tripVoucher.value.number}.
+                                            მარშრუტა #: ${plannedRoutes.number} 
+                                            თარიღი: ${day.value.dateStamp}
+                                            გასვლა #: ${exodus.value.number}
+                                            საგზურის  #: ${tripVoucher.value.number} 
 
                                         </td>
                                     </tr>

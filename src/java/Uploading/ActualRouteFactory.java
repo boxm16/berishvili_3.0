@@ -99,7 +99,7 @@ public class ActualRouteFactory {
         String exodusNumberLocationInTheRow = new StringBuilder("J").append(String.valueOf(rowIndex)).toString();
         short exodusNumber = Float.valueOf(data.remove(exodusNumberLocationInTheRow)).shortValue();
 
-        TreeMap<Short, Exodus> exoduses = day.getExoduses();
+        TreeMap<Short, Exodus> exoduses = day.getActualExoduses();
         Exodus exodus;
         if (exoduses.containsKey(exodusNumber)) {
             exodus = exoduses.get(exodusNumber);
@@ -110,7 +110,7 @@ public class ActualRouteFactory {
 
         exodus = addRowElementsToExodus(exodus, data, rowIndex);
         exoduses.put(exodusNumber, exodus);
-        day.setExoduses(exoduses);
+        day.setActualExoduses(exoduses);
         return day;
     }
 
@@ -128,7 +128,8 @@ public class ActualRouteFactory {
         String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
         String shift = data.remove(shiftLocationInTheRow);
         if (shift.contains(".")) {
-            tripVoucherNumber = tripVoucherNumber + ":" + shift;
+
+            tripVoucherNumber = tripVoucherNumber + "@" + shift;
         }
 
         TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
@@ -280,7 +281,7 @@ public class ActualRouteFactory {
 
             //   tripVoucher.setNote(note);
         }
-        System.out.println("TRIP VOUCHER NUMBER:"+tripVoucherNumber);
+        System.out.println("TRIP VOUCHER NUMBER:" + tripVoucherNumber);
         tripVoucher.setNumber(tripVoucherNumber);
         //add another elements
         tripVoucher = addRowElementsToTripVoucher(tripVoucher, data, rowIndex);

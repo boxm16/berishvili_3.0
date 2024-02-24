@@ -3,6 +3,8 @@ package Uploading;
 import BasicModels.Route;
 import Route.RouteDao;
 import Service.StaticsDispatcher;
+import TechMan.TechManDao;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -63,6 +65,21 @@ public class PlannedDataUploadThread extends Thread {
         }
         uploadingProgressMessage += "<br> DATABASE PART STARTED:.....";
         StaticsDispatcher.setUploadingProgressMessage(uploadingProgressMessage);
+
+        TechManDao techManDao = new TechManDao();
+        String plannedTripPeriodTableDeletionStatus = techManDao.deletePlannedTripPeriodTable();
+        LocalTime now2 = LocalTime.now();
+        System.out.println(now2 + ": " + plannedTripPeriodTableDeletionStatus);
+
+        String plannedTripVoucherTableDeletionStatus = techManDao.deletePlannedTripVoucherTable();
+        LocalTime now3 = LocalTime.now();
+        System.out.println(now3 + ": " + plannedTripVoucherTableDeletionStatus);
+
+        String createPlannedTripVoucherTableStatus = techManDao.createPlannedTripVoucherTable();
+        String createPlannedTripPeriodTableStatus = techManDao.createPlannedTripPeriodTable();
+        LocalTime now4 = LocalTime.now();
+        System.out.println(now3 + ": " + createPlannedTripVoucherTableStatus + " : " + createPlannedTripPeriodTableStatus);
+
         PlannedDataUploadDao plannedDataUploadDao = new PlannedDataUploadDao();
         String insertionResult = plannedDataUploadDao.insertNewData(routesFromExcelFile);
         System.out.println("ALL SET");

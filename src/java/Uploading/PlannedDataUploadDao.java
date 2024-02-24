@@ -30,21 +30,21 @@ public class PlannedDataUploadDao {
             connection = dataBaseConnection.getConnection();
             connection.setAutoCommit(false);
             //Statements to insert records
-            PreparedStatement deleteTripPeriodPreparedStatement = connection.prepareStatement("DELETE FROM planned_trip_period");
-            PreparedStatement deleteTripVoucherPreparedStatement = connection.prepareStatement("DELETE FROM planned_trip_voucher");
+            //PreparedStatement deleteTripPeriodPreparedStatement = connection.prepareStatement("DELETE FROM planned_trip_period");
+            //PreparedStatement deleteTripVoucherPreparedStatement = connection.prepareStatement("DELETE FROM planned_trip_voucher");
             PreparedStatement tripVoucherInsertionPreparedStatement = connection.prepareStatement("INSERT INTO planned_trip_voucher (number, route_number, date_stamp, base_number, exodus_number, driver_number, driver_name, bus_number, bus_type, base_leaving_time, base_return_time, shift, trip_periods_total, kilometrage) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
             PreparedStatement tripPeriodInsertionPreparedStatement = connection.prepareStatement("INSERT INTO planned_trip_period (trip_voucher_number, type, start_time, arrival_time) VALUES (?,?,?,?);");
-            System.out.println("DELETING OLD DATA FROM DATABASE:.....");
-            deleteTripPeriodPreparedStatement.execute();
-            deleteTripVoucherPreparedStatement.execute();
-            System.out.println("DELETING OLD DATA FROM DATABASE:DONE");
+            //System.out.println("DELETING OLD DATA FROM DATABASE:.....");
+            //deleteTripPeriodPreparedStatement.execute();
+            //deleteTripVoucherPreparedStatement.execute();
+           // System.out.println("DELETING OLD DATA FROM DATABASE:DONE");
 
             for (Map.Entry<String, Route> routeEntry : routesFromExcelFile.entrySet()) {
                 System.out.println("Inserting route data. Route Number:" + routeEntry.getValue().getNumber());
                 TreeMap<String, Day> days = routeEntry.getValue().getDays();
                 for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
                     String dateStamp = dayEntry.getValue().getDateStamp();
-                    TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+                    TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getPlannedExoduses();
                     for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
                         TreeMap<String, TripVoucher> tripVouchers = exodusEntry.getValue().getTripVouchers();
                         for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {
@@ -91,8 +91,8 @@ public class PlannedDataUploadDao {
 
             //Saving the changes
             connection.commit();
-            deleteTripPeriodPreparedStatement.close();
-            deleteTripVoucherPreparedStatement.close();
+           // deleteTripPeriodPreparedStatement.close();
+            //deleteTripVoucherPreparedStatement.close();
             tripVoucherInsertionPreparedStatement.close();
             tripPeriodInsertionPreparedStatement.close();
             connection.close();

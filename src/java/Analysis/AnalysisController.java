@@ -38,7 +38,7 @@ public class AnalysisController {
             Route actualRoute = actualRouteEntry.getValue();
             TreeMap<String, Day> days = actualRoute.getDays();
             for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
-                TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+                TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getActualExoduses();
                 for (Map.Entry<Short, Exodus> exoduseEntry : exoduses.entrySet()) {
                     TreeMap<String, TripVoucher> tripVouchers = exoduseEntry.getValue().getTripVouchers();
                     for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {

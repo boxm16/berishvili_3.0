@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PlannedRouteController {
 
     LinkedHashMap<String, ArrayList<String>> routesDates;
-    
+
     @Autowired
     private IndxDates indexDates;
 
@@ -66,7 +66,7 @@ public class PlannedRouteController {
         TreeMap<String, Day> days = plannedRoute.getDays();
         for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
             response.append("<tr style=\"background-color:#4863A0\"> <td colspan='3' align=\"center\">თარიღი:" + dayEntry.getValue().getDateStamp() + "</td></tr>");
-            TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+            TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getPlannedExoduses();
             for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
                 response.append("<tr style=\"background-color:lightblue\"><td colspan='3' align=\"center\">გასვლა #:" + exodusEntry.getValue().getNumber() + "</td></tr>");
                 TreeMap<String, TripVoucher> tripVouchers = exodusEntry.getValue().getTripVouchers();

@@ -98,13 +98,13 @@ public class PlannedRouteDao {
                 Day day = plannedRoute.getDays().get(dateStamp);
 
                 short exodusNumber = resultSet.getShort("exodus_number");
-                if (!day.getExoduses().containsKey(exodusNumber)) {
+                if (!day.getPlannedExoduses().containsKey(exodusNumber)) {
                     Exodus newExodus = new Exodus();
                     newExodus.setNumber(exodusNumber);
-                    day.getExoduses().put(exodusNumber, newExodus);
+                    day.getPlannedExoduses().put(exodusNumber, newExodus);
                 }
 
-                Exodus exodus = day.getExoduses().get(exodusNumber);
+                Exodus exodus = day.getPlannedExoduses().get(exodusNumber);
                 String tripVoucherNumber = resultSet.getString("number");
                 if (!exodus.getTripVouchers().containsKey(tripVoucherNumber)) {
                     TripVoucher newTripVoucher = new TripVoucher();

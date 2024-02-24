@@ -52,7 +52,7 @@ public class NewActualDataUploadDao {
             TreeMap<String, Day> days = route.getDays();
             for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
                 String dateStamp = dayEntry.getValue().getDateStamp();
-                TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getExoduses();
+                TreeMap<Short, Exodus> exoduses = dayEntry.getValue().getActualExoduses();
                 for (Map.Entry<Short, Exodus> exodusEntry : exoduses.entrySet()) {
                     TreeMap<String, TripVoucher> tripVouchers = exodusEntry.getValue().getTripVouchers();
                     for (Map.Entry<String, TripVoucher> tripVoucherEntry : tripVouchers.entrySet()) {
