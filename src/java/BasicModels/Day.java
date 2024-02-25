@@ -183,34 +183,25 @@ public class Day {
                     String type = tripPeriod.getType();
                     LocalDateTime startTimeActual = tripPeriod.getStartTimeActual();
                     LocalDateTime arrivalTimeActual = tripPeriod.getArrivalTimeActual();
-                    if (arrivalTimeActual == null) {
-                        //do nothing
-                    } else {
-                        if (startTimeActual == null) {
-                            if (type.equals("ab")) {
-                                abNullers.add(tripPeriod);
-                            }
-                            if (type.equals("ba")) {
-                                baNullers.add(tripPeriod);
-                            }
-                        } else {
-                            tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
-                            if (type.equals("ab")) {
-                                this.abActualTimetable.put(startTimeActual, tripPeriod);
-                            }
-                            if (type.equals("ba")) {
-                                this.baActualTimetable.put(startTimeActual, tripPeriod);
-                            }
 
+                    if (startTimeActual != null && arrivalTimeActual != null) {
+
+                        tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
+                        if (type.equals("ab")) {
+                            this.abActualTimetable.put(startTimeActual, tripPeriod);
                         }
+                        if (type.equals("ba")) {
+                            this.baActualTimetable.put(startTimeActual, tripPeriod);
+                        }
+
                     }
                 }
+                //this.abActualTimetable = addNullers(this.abActualTimetable, abNullers);
+                // this.baActualTimetable = addNullers(this.baActualTimetable, baNullers);
+                this.actualTimetableCreated = true;
             }
-        }
 
-        this.abActualTimetable = addNullers(this.abActualTimetable, abNullers);
-        this.baActualTimetable = addNullers(this.baActualTimetable, baNullers);
-        this.actualTimetableCreated = true;
+        }
     }
 
     public TripPeriod getAbPlannedSubGuarantyTrip() {
