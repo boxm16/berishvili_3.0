@@ -15,15 +15,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PlannedRouteFactory {
-
+    
     private final Converter converter;
-
+    
     public PlannedRouteFactory() {
         this.converter = new Converter();
     }
-
+    
     public TreeMap<String, Route> getRoutesFromExcelFile(String pathFile) {
-
+        
         System.out.println("STARTING READING EXCEL FILE");
         ExcelReader excelReader = new ExcelReader();
         HashMap<String, String> cellsFromExcelFile = excelReader.getCellsFromExcelFile(pathFile);
@@ -31,25 +31,25 @@ public class PlannedRouteFactory {
         System.out.println("COMPLETED READING EXCEL FILE");
         return routes;
     }
-
+    
     private TreeMap<String, Route> convertExcelDataToRoutes(HashMap<String, String> data) {
         TreeMap<String, Route> routes = new TreeMap<>();
         int excelRowIndex = 7;
-
+        
         while (!data.isEmpty()) {
             String routeNumberLocationInTheRow = new StringBuilder("I").append(String.valueOf(excelRowIndex)).toString();
             String routeNumber = data.remove(routeNumberLocationInTheRow);//at the same time reading and removing the cell from hash Map
             if (routeNumber == null) {//in theory this means that you reached the end of rows with data
                 break;
             }
-
+            
             Route route;
             if (routes.containsKey(routeNumber)) {
                 route = routes.get(routeNumber);
             } else {
                 route = new Route();
                 route.setNumber(routeNumber);
-
+                
             }
             route = addRowElementsToBasicRoute(route, data, excelRowIndex);
             routes.put(routeNumber, route);
@@ -57,14 +57,14 @@ public class PlannedRouteFactory {
         }
         return routes;
     }
-
+    
     private Route addRowElementsToBasicRoute(Route route, HashMap<String, String> data, int rowIndex) {
-
+        
         String dateStampLocationInTheRow = new StringBuilder("G").append(String.valueOf(rowIndex)).toString();
         String dateStampExcelFormat = data.remove(dateStampLocationInTheRow);
-
+        
         String dateStamp = this.converter.convertDateStampExcelFormatToDatabaseFormat(dateStampExcelFormat);
-
+        
         TreeMap<String, Day> days = route.getDays();
         Day day;
         if (days.containsKey(dateStamp)) {
@@ -75,15 +75,15 @@ public class PlannedRouteFactory {
         day.setDateStamp(dateStamp);
         day = addRowElementsToDay(day, data, rowIndex);
         days.put(dateStamp, day);
-
+        
         route.setDays(days);
         return route;
     }
-
+    
     private Day addRowElementsToDay(Day day, HashMap<String, String> data, int rowIndex) {
         String exodusNumberLocationInTheRow = new StringBuilder("J").append(String.valueOf(rowIndex)).toString();
         short exodusNumber = Float.valueOf(data.remove(exodusNumberLocationInTheRow)).shortValue();
-
+        
         TreeMap<Short, Exodus> exoduses = day.getPlannedExoduses();
         Exodus exodus;
         if (exoduses.containsKey(exodusNumber)) {
@@ -92,28 +92,28 @@ public class PlannedRouteFactory {
             exodus = new Exodus();
             exodus.setNumber(exodusNumber);
         }
-
+        
         exodus = addRowElementsToExodus(exodus, data, rowIndex);
         exoduses.put(exodusNumber, exodus);
         day.setPlannedExoduses(exoduses);
         return day;
     }
-
+    
     private Exodus addRowElementsToExodus(Exodus exodus, HashMap<String, String> data, int rowIndex) {
         //----first baseNumber
         String baseNumberLocationInTheRow = new StringBuilder("A").append(String.valueOf(rowIndex)).toString();
         short baseNumber = Short.valueOf(data.remove(baseNumberLocationInTheRow));
-
+        
         String tripVoucherNumberLocationInTheRow = new StringBuilder("H").append(String.valueOf(rowIndex)).toString();
         String tripVoucherNumber = data.remove(tripVoucherNumberLocationInTheRow);
-
+        
         String shiftLocationInTheRow = new StringBuilder("E").append(String.valueOf(rowIndex)).toString();
         String shift = data.remove(shiftLocationInTheRow);
-
+        
         if (shift.contains(".")) {
             tripVoucherNumber = tripVoucherNumber + "@" + shift;
         }
-
+        
         TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
         TripVoucher tripVoucher;
         if (tripVouchers.containsKey(tripVoucherNumber)) {
@@ -122,24 +122,24 @@ public class PlannedRouteFactory {
             tripVoucher = new TripVoucher();
             String busNumberLocationInTheRow = new StringBuilder("C").append(String.valueOf(rowIndex)).toString();
             String busrNumber = data.remove(busNumberLocationInTheRow);
-
+            
             String busTypeLocationInTheRow = new StringBuilder("B").append(String.valueOf(rowIndex)).toString();
             String busType = data.remove(busTypeLocationInTheRow);
-
+            
             String driverNumberLocationInTheRow = new StringBuilder("D").append(String.valueOf(rowIndex)).toString();
             String driverNumber = data.remove(driverNumberLocationInTheRow);
-
+            
             String driverNameLocationInTheRow = new StringBuilder("F").append(String.valueOf(rowIndex)).toString();
             String driverName = data.remove(driverNameLocationInTheRow);
-
+            
             String tripPeriodsTotalLocationInTheRow = new StringBuilder("S").append(String.valueOf(rowIndex)).toString();
-            System.out.println(tripPeriodsTotalLocationInTheRow);
-            float tripPeriodsTotalF = Float.parseFloat(data.remove(tripPeriodsTotalLocationInTheRow));
+            System.out.println(data.get(tripPeriodsTotalLocationInTheRow));
+            float tripPeriodsTotalF = Float.valueOf(data.remove(tripPeriodsTotalLocationInTheRow));
             int tripPeriodsTotal = (int) tripPeriodsTotalF;
-
+            
             String kilometrageLocationInTheRow = new StringBuilder("Q").append(String.valueOf(rowIndex)).toString();
             float kilometrage = Float.parseFloat(data.remove(kilometrageLocationInTheRow));
-
+            
             String baseLeavingTimeScheduledLocationInTheRow = new StringBuilder("K").append(String.valueOf(rowIndex)).toString();
             LocalDateTime baseLeavingTimeScheduled = this.converter.convertStringTimeToDate(data.remove(baseLeavingTimeScheduledLocationInTheRow));
 
@@ -165,9 +165,9 @@ public class PlannedRouteFactory {
             tripVoucher.setTripPeriodsScheduledTotal(tripPeriodsTotal);
             tripVoucher.setKilometrageScheduled(kilometrage);
             tripVoucher.setBaseLeavingTimeScheduled(baseLeavingTimeScheduled);
-
+            
             tripVoucher.setBaseReturnTimeScheduled(baseReturnTimeScheduled);
-
+            
         }
         tripVoucher.setNumber(tripVoucherNumber);
         //add another elements
@@ -176,7 +176,7 @@ public class PlannedRouteFactory {
         exodus.setTripVouchers(tripVouchers);
         return exodus;
     }
-
+    
     private TripVoucher addRowElementsToTripVoucher(TripVoucher tripVoucher, HashMap<String, String> data, int rowIndex) {
         String tripPeriodDescriptionLocationInTheRow = new StringBuilder("U").append(String.valueOf(rowIndex)).toString();
         String tripPeriodDescription = data.remove(tripPeriodDescriptionLocationInTheRow);
@@ -206,7 +206,7 @@ public class PlannedRouteFactory {
         tripVoucher.setTripPeriods(tripPeriods);
         return tripVoucher;
     }
-
+    
     private String getTripPeriodTypeFromTripDescription(String tripPeriodDescription) {
         if (tripPeriodDescription.contains("გასვლა")) {
             return "baseLeaving";
@@ -222,7 +222,7 @@ public class PlannedRouteFactory {
         }
         return tripPeriodDescription;
     }
-
+    
     private TripPeriod createBaseLeavingPeriod(HashMap<String, String> data, int rowIndex) {
         String leftSideAnchor = new StringBuilder("V").append(String.valueOf(rowIndex)).toString();
         TripPeriod tripPeriod;
@@ -235,7 +235,7 @@ public class PlannedRouteFactory {
         }
         return tripPeriod;
     }
-
+    
     private TripPeriod createBaseReturnPeriod(HashMap<String, String> data, int rowIndex) {
         String leftSideAnchor = new StringBuilder("V").append(String.valueOf(rowIndex)).toString();
         TripPeriod tripPeriod;
@@ -248,7 +248,7 @@ public class PlannedRouteFactory {
         }
         return tripPeriod;
     }
-
+    
     private TripPeriod createBreakPeriod(HashMap<String, String> data, int rowIndex) {
         String leftSideAnchor = new StringBuilder("V").append(String.valueOf(rowIndex)).toString();
         TripPeriod tripPeriod;
@@ -260,7 +260,7 @@ public class PlannedRouteFactory {
         }
         return tripPeriod;
     }
-
+    
     private ArrayList<TripPeriod> createTripPeridsOfRound(HashMap<String, String> data, int rowIndex) {
         ArrayList<TripPeriod> tripPeriodsOfRound = new ArrayList();
         String leftSideAnchor = new StringBuilder("V").append(String.valueOf(rowIndex)).toString();
@@ -300,7 +300,7 @@ public class PlannedRouteFactory {
         }
         return tripPeriodsOfRound;
     }
-
+    
     private TripPeriod createTripPeriodFromLeftSide(HashMap<String, String> data, int rowIndex, String tripPeriodType) {
         String startTimeScheduledLocationInTheRow = new StringBuilder("V").append(String.valueOf(rowIndex)).toString();
         //  String startTimeActualLocationInTheRow = new StringBuilder("R").append(String.valueOf(rowIndex)).toString();
@@ -326,7 +326,7 @@ public class PlannedRouteFactory {
 
         return new TripPeriod(tripPeriodType, startTimeScheduled, null, null, arrivalTimeScheduled, null, null);
     }
-
+    
     private TripPeriod createTripPeriodFromRightSide(HashMap<String, String> data, int rowIndex, String tripPeriodType) {
         String startTimeScheduledLocationInTheRow = new StringBuilder("AB").append(String.valueOf(rowIndex)).toString();
         // String startTimeActualLocationInTheRow = new StringBuilder("X").append(String.valueOf(rowIndex)).toString();

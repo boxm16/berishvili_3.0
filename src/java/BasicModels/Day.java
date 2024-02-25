@@ -170,6 +170,9 @@ public class Day {
 
     private void createActualTimetables() {
 
+        ArrayList<TripPeriod> abNullers = new ArrayList();
+        ArrayList<TripPeriod> baNullers = new ArrayList();
+
         for (Map.Entry<Short, Exodus> exoduseEntry : this.actualExoduses.entrySet()) {
             Exodus exodus = exoduseEntry.getValue();
             TreeMap<String, TripVoucher> tripVouchers = exodus.getTripVouchers();
@@ -179,18 +182,34 @@ public class Day {
                 for (TripPeriod tripPeriod : tripPeriods) {
                     String type = tripPeriod.getType();
                     LocalDateTime startTimeActual = tripPeriod.getStartTimeActual();
-                    if (startTimeActual != null) {
-                        tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
-                        if (type.equals("ab")) {
-                            this.abActualTimetable.put(startTimeActual, tripPeriod);
-                        }
-                        if (type.equals("ba")) {
-                            this.baActualTimetable.put(startTimeActual, tripPeriod);
+                    LocalDateTime arrivalTimeActual = tripPeriod.getArrivalTimeActual();
+                    if (arrivalTimeActual == null) {
+                        //do nothing
+                    } else {
+                        if (startTimeActual == null) {
+                            if (type.equals("ab")) {
+                                abNullers.add(tripPeriod);
+                            }
+                            if (type.equals("ba")) {
+                                baNullers.add(tripPeriod);
+                            }
+                        } else {
+                            tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
+                            if (type.equals("ab")) {
+                                this.abActualTimetable.put(startTimeActual, tripPeriod);
+                            }
+                            if (type.equals("ba")) {
+                                this.baActualTimetable.put(startTimeActual, tripPeriod);
+                            }
+
                         }
                     }
                 }
             }
         }
+
+        this.abActualTimetable = addNullers(this.abActualTimetable, abNullers);
+        this.baActualTimetable = addNullers(this.baActualTimetable, baNullers);
         this.actualTimetableCreated = true;
     }
 
@@ -336,6 +355,59 @@ public class Day {
             System.out.println("Round route");
         }
         this.actualGuarantyTripsCreated = true;
+    }
+
+    private TreeMap<LocalDateTime, TripPeriod> addNullers(TreeMap<LocalDateTime, TripPeriod> timetable, ArrayList<TripPeriod> nullers) {
+        if (nullers.isEmpty()) {
+            return timetable;
+        }
+        for (TripPeriod nullerTripPeriod : nullers) {
+            nullerTripPeriod.setSpacialCase(true);
+            ArrayList<TripPeriod> timeTabledTripPeriods = new ArrayList<>(timetable.values());
+            int x = timeTabledTripPeriods.size() - 1;
+            while (x > 0) {
+                LocalDateTime fakeStartTimeActual;
+                LocalDateTime startTimeActual;
+
+                TripPeriod timeTabledTripPeriod = timeTabledTripPeriods.get(x);
+                if (x != 0) {
+
+                    if (timeTabledTripPeriod.isSpacialCase()) {
+                        startTimeActual = timeTabledTripPeriod.getFakeStartTimeActual();
+
+                    } else {
+                        startTimeActual = timeTabledTripPeriod.getStartTimeActual();
+                    }
+
+                    if (nullerTripPeriod.getArrivalTimeActual().isAfter(timeTabledTripPeriod.getArrivalTimeActual())) {
+
+                        fakeStartTimeActual = startTimeActual.plusSeconds(1);
+                        nullerTripPeriod.setFakeStartTimeActual(fakeStartTimeActual);
+
+                        timetable.put(fakeStartTimeActual, nullerTripPeriod);
+                        break;
+                    }
+                } else {
+                    //if we reached the last TripPeriod in gpsTimeTable and still arrivalTime is not after
+
+                    if (timeTabledTripPeriod.isSpacialCase()) {
+                        startTimeActual = timeTabledTripPeriod.getFakeStartTimeActual();
+                    } else {
+                        startTimeActual = timeTabledTripPeriod.getStartTimeActual();
+                    }
+
+                    if (nullerTripPeriod.getArrivalTimeActual().isAfter(timeTabledTripPeriod.getArrivalTimeActual())) {
+                        fakeStartTimeActual = startTimeActual.plusSeconds(1);
+                    } else {
+                        fakeStartTimeActual = startTimeActual.minusSeconds(1);
+                    }
+                    nullerTripPeriod.setFakeStartTimeActual(fakeStartTimeActual);
+                    timetable.put(fakeStartTimeActual, nullerTripPeriod);
+                }
+                x--;
+            }
+        }
+        return timetable;
     }
 
 }

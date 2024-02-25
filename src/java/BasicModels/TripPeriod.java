@@ -22,8 +22,10 @@ public class TripPeriod {
     private LocalDateTime arrivalTimeScheduled;
     private LocalDateTime arrivalTimeActual;
     private String arrivalTimeDifference;
-    
+
     private short exoudsNumber;
+    private boolean spacialCase;
+    private LocalDateTime fakeStartTimeActual;
 
     public TripPeriod() {
     }
@@ -147,6 +149,22 @@ public class TripPeriod {
         this.exoudsNumber = exoudsNumber;
     }
 
+    public boolean isSpacialCase() {
+        return spacialCase;
+    }
+
+    public void setSpacialCase(boolean spacialCase) {
+        this.spacialCase = spacialCase;
+    }
+
+    public LocalDateTime getFakeStartTimeActual() {
+        return fakeStartTimeActual;
+    }
+
+    public void setFakeStartTimeActual(LocalDateTime fakeStartTimeActual) {
+        this.fakeStartTimeActual = fakeStartTimeActual;
+    }
     
     
+
 }
