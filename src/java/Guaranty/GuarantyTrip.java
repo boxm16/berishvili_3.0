@@ -133,11 +133,13 @@ public class GuarantyTrip extends TripPeriod {
             }
             if (seconds >= 61 && seconds < 300) {
                 return "yellow";
-            } else {
+            }
+            if (seconds >= 300) {
                 return "red";
             }
         } else {
             return "inherited";
         }
+        return "inherited";
     }
 }
