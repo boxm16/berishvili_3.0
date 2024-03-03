@@ -119,4 +119,26 @@ public class GuarantyTrip extends TripPeriod {
             return "";
         }
     }
+
+    public String getGuarantyStartTimeDifferenceColorString() {
+        if (this.getStartTimeActual() != null) {
+            Converter converter = new Converter();
+            Duration between = Duration.between(this.getStartTimeScheduled(), this.getStartTimeActual());
+            long seconds = between.getSeconds();
+            if (seconds < 0) {
+                seconds = seconds * -1;
+            }
+
+            if (seconds < 60) {
+                return "inherited";
+            }
+            if (seconds >= 61 && seconds < 300) {
+                return "yellow";
+            } else {
+                return "red";
+            }
+        } else {
+            return "inherited";
+        }
+    }
 }
