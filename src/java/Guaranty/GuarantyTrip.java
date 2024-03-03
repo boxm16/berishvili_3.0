@@ -122,7 +122,6 @@ public class GuarantyTrip extends TripPeriod {
 
     public String getGuarantyStartTimeDifferenceColorString() {
         if (this.getStartTimeActual() != null) {
-            Converter converter = new Converter();
             Duration between = Duration.between(this.getStartTimeScheduled(), this.getStartTimeActual());
             long seconds = between.getSeconds();
             if (seconds < 0) {
