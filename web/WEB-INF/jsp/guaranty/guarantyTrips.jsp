@@ -324,7 +324,7 @@
 
                                 <td align="center">${guarantyTripPeriod.startTimeScheduledString}</td>
                                 <td align="center">${guarantyTripPeriod.startTimeActualString}</td>
-                               <td align="center">${guarantyTripPeriod.getGuarantyStartTimeDifferenceString()}</td>
+                                <td align="center">${guarantyTripPeriod.getGuarantyStartTimeDifferenceString()}</td>
                                 <td align="center">${guarantyTripPeriod.plannedExodusNumber}</td>
                                 <td align="center">${guarantyTripPeriod.actualExodusNumber}</td>
 

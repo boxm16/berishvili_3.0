@@ -2,7 +2,6 @@ package Guaranty;
 
 import BasicModels.Day;
 import BasicModels.Route;
-import BasicModels.TripPeriod;
 import NewUpload.RequestData;
 import Service.RequestDataDecoder;
 import java.util.ArrayList;
@@ -41,83 +40,33 @@ public class GuarantyController {
                 Day plannedDay = plannedDaysEntry.getValue();
                 Day actualDay = actualDays.get(plannedDaysEntry.getKey());
 
-                TripPeriod abPlannedSubGuarantyTrip = plannedDay.getAbPlannedSubGuarantyTrip();
-                TripPeriod abActualSubGuarantyTrip = actualDay.getAbActualSubGuarantyTrip();
+                GuarantyDay guarantyDay = new GuarantyDay();
+                guarantyDay.setPlannedExoduses(plannedDay.getPlannedExoduses());
+                guarantyDay.setActualExoduses(actualDay.getActualExoduses());
 
-                GuarantyTrip guarantyTrip = new GuarantyTrip();
-                guarantyTrip.setDateStamp(plannedDay.getDateStamp());
-                guarantyTrip.setaPoint(plannedRoutesEntry.getValue().getaPoint());
-                guarantyTrip.setbPoint(plannedRoutesEntry.getValue().getbPoint());
-                guarantyTrip.setRouteNumber(plannedRoutesEntry.getKey());
-                guarantyTrip.setGuarantyType("ქვესაგარანტიო");
+                guarantyDay.calculateGuarantyTrips();
+                GuarantyTrip abSubguarantyTrip = guarantyDay.getAbSubguarantyTrip();
 
-                guarantyTrip.setType(abPlannedSubGuarantyTrip.getType());
-                guarantyTrip.setPlannedExodusNumber(abPlannedSubGuarantyTrip.getExoudsNumber());
-                guarantyTrip.setStartTimeScheduled(abPlannedSubGuarantyTrip.getStartTimeScheduled());
+                abSubguarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
+                abSubguarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                guarantyTrips.add(abSubguarantyTrip);
 
-                guarantyTrip.setStartTimeActual(abActualSubGuarantyTrip.getStartTimeActual());
-                guarantyTrip.setActualExodusNumber(abActualSubGuarantyTrip.getExoudsNumber());
+                GuarantyTrip abGuarantyTrip = guarantyDay.getAbGuarantyTrip();
+                abGuarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
+                abGuarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                guarantyTrips.add(abGuarantyTrip);
+                if (guarantyDay.getBaGuarantyTrip() == null) {
+                } else {
+                    GuarantyTrip baSubguarantyTrip = guarantyDay.getBaSubguarantyTrip();
+                    baSubguarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
+                    baSubguarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                    guarantyTrips.add(baSubguarantyTrip);
 
-                guarantyTrips.add(guarantyTrip);
-
-                TripPeriod abPlannedGuarantyTrip = plannedDay.getAbPlannedGuarantyTrip();
-                TripPeriod abActualGuarantyTrip = actualDay.getAbActualGuarantyTrip();
-                GuarantyTrip guarantyTrip1 = new GuarantyTrip();
-                guarantyTrip1.setDateStamp(plannedDay.getDateStamp());
-                guarantyTrip1.setaPoint(plannedRoutesEntry.getValue().getaPoint());
-                guarantyTrip1.setbPoint(plannedRoutesEntry.getValue().getbPoint());
-                guarantyTrip1.setRouteNumber(plannedRoutesEntry.getKey());
-                guarantyTrip1.setGuarantyType("საგარანტიო");
-
-                guarantyTrip1.setType(abPlannedGuarantyTrip.getType());
-                guarantyTrip1.setPlannedExodusNumber(abPlannedGuarantyTrip.getExoudsNumber());
-                guarantyTrip1.setStartTimeScheduled(abPlannedGuarantyTrip.getStartTimeScheduled());
-
-                guarantyTrip1.setStartTimeActual(abActualGuarantyTrip.getStartTimeActual());
-                guarantyTrip1.setActualExodusNumber(abActualGuarantyTrip.getExoudsNumber());
-
-                guarantyTrips.add(guarantyTrip1);
-
-                TripPeriod baPlannedSubGuarantyTrip = plannedDay.getBaPlannedSubGuarantyTrip();
-                TripPeriod baActualSubGuarantyTrip = actualDay.getBaActualSubGuarantyTrip();
-                if (baPlannedSubGuarantyTrip != null) {
-                    GuarantyTrip guarantyTrip2 = new GuarantyTrip();
-                    guarantyTrip2.setDateStamp(plannedDay.getDateStamp());
-                    guarantyTrip2.setaPoint(plannedRoutesEntry.getValue().getaPoint());
-                    guarantyTrip2.setbPoint(plannedRoutesEntry.getValue().getbPoint());
-                    guarantyTrip2.setRouteNumber(plannedRoutesEntry.getKey());
-                    guarantyTrip2.setGuarantyType("ქვესაგარანტიო");
-
-                    guarantyTrip2.setType(baPlannedSubGuarantyTrip.getType());
-                    guarantyTrip2.setPlannedExodusNumber(baPlannedSubGuarantyTrip.getExoudsNumber());
-                    guarantyTrip2.setStartTimeScheduled(baPlannedSubGuarantyTrip.getStartTimeScheduled());
-
-                    guarantyTrip2.setStartTimeActual(baActualSubGuarantyTrip.getStartTimeActual());
-                    guarantyTrip2.setActualExodusNumber(baActualSubGuarantyTrip.getExoudsNumber());
-
-                    guarantyTrips.add(guarantyTrip2);
+                    GuarantyTrip baGuarantyTrip = guarantyDay.getBaGuarantyTrip();
+                    baGuarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
+                    baGuarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                    guarantyTrips.add(baGuarantyTrip);
                 }
-
-                TripPeriod baPlannedGuarantyTrip = plannedDay.getBaPlannedGuarantyTrip();
-                TripPeriod baActualGuarantyTrip = actualDay.getBaActualGuarantyTrip();
-                if (baPlannedGuarantyTrip != null) {
-                    GuarantyTrip guarantyTrip3 = new GuarantyTrip();
-                    guarantyTrip3.setDateStamp(plannedDay.getDateStamp());
-                    guarantyTrip3.setaPoint(plannedRoutesEntry.getValue().getaPoint());
-                    guarantyTrip3.setbPoint(plannedRoutesEntry.getValue().getbPoint());
-                    guarantyTrip3.setRouteNumber(plannedRoutesEntry.getKey());
-                    guarantyTrip3.setGuarantyType("საგარანტიო");
-
-                    guarantyTrip3.setType(baPlannedGuarantyTrip.getType());
-                    guarantyTrip3.setPlannedExodusNumber(baPlannedGuarantyTrip.getExoudsNumber());
-                    guarantyTrip3.setStartTimeScheduled(baPlannedGuarantyTrip.getStartTimeScheduled());
-
-                    guarantyTrip3.setStartTimeActual(baActualGuarantyTrip.getStartTimeActual());
-                    guarantyTrip3.setActualExodusNumber(baActualGuarantyTrip.getExoudsNumber());
-
-                    guarantyTrips.add(guarantyTrip3);
-                }
-
             }
         }
 

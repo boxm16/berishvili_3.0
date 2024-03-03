@@ -14,25 +14,10 @@ public class Day {
     private boolean plannedTimetableCreated;
     private boolean actualTimetableCreated;
 
-    private boolean plannedGuarantyTripsCreated;
-    private boolean actualGuarantyTripsCreated;
-
     private TreeMap<LocalDateTime, TripPeriod> abPlannedTimetable;
     private TreeMap<LocalDateTime, TripPeriod> baPlannedTimetable;
     private TreeMap<LocalDateTime, TripPeriod> abActualTimetable;
     private TreeMap<LocalDateTime, TripPeriod> baActualTimetable;
-
-    private TripPeriod abPlannedSubGuarantyTrip;
-    private TripPeriod abPlannedGuarantyTrip;
-
-    private TripPeriod baPlannedSubGuarantyTrip;
-    private TripPeriod baPlannedGuarantyTrip;
-
-    private TripPeriod abActualSubGuarantyTrip;
-    private TripPeriod abActualGuarantyTrip;
-
-    private TripPeriod baActualSubGuarantyTrip;
-    private TripPeriod baActualGuarantyTrip;
 
     public Day() {
         this.plannedExoduses = new TreeMap();
@@ -144,7 +129,7 @@ public class Day {
         return this.baActualTimetable;
     }
 
-    private void createPlannedTimetebles() {
+    public void createPlannedTimetebles() {
 
         for (Map.Entry<Short, Exodus> exoduseEntry : this.plannedExoduses.entrySet()) {
             Exodus exodus = exoduseEntry.getValue();
@@ -168,10 +153,7 @@ public class Day {
         this.plannedTimetableCreated = true;
     }
 
-    private void createActualTimetables() {
-
-        ArrayList<TripPeriod> abNullers = new ArrayList();
-        ArrayList<TripPeriod> baNullers = new ArrayList();
+    public void createActualTimetables() {
 
         for (Map.Entry<Short, Exodus> exoduseEntry : this.actualExoduses.entrySet()) {
             Exodus exodus = exoduseEntry.getValue();
@@ -202,150 +184,6 @@ public class Day {
             }
 
         }
-    }
-
-    public TripPeriod getAbPlannedSubGuarantyTrip() {
-
-        if (!this.plannedGuarantyTripsCreated) {
-            calculatePlannedGuarantyTrips();
-        }
-
-        return abPlannedSubGuarantyTrip;
-    }
-
-    public void setAbPlannedSubGuarantyTrip(TripPeriod abPlannedSubGuarantyTrip) {
-        this.abPlannedSubGuarantyTrip = abPlannedSubGuarantyTrip;
-    }
-
-    public TripPeriod getAbPlannedGuarantyTrip() {
-        if (!this.plannedGuarantyTripsCreated) {
-            calculatePlannedGuarantyTrips();
-        }
-
-        return abPlannedGuarantyTrip;
-    }
-
-    public void setAbPlannedGuarantyTrip(TripPeriod abPlannedGuarantyTrip) {
-        this.abPlannedGuarantyTrip = abPlannedGuarantyTrip;
-    }
-
-    public TripPeriod getBaPlannedSubGuarantyTrip() {
-        if (!this.plannedGuarantyTripsCreated) {
-            calculatePlannedGuarantyTrips();
-        }
-
-        return baPlannedSubGuarantyTrip;
-    }
-
-    public void setBaPlannedSubGuarantyTrip(TripPeriod baPlannedSubGuarantyTrip) {
-        this.baPlannedSubGuarantyTrip = baPlannedSubGuarantyTrip;
-    }
-
-    public TripPeriod getBaPlannedGuarantyTrip() {
-
-        if (!this.plannedGuarantyTripsCreated) {
-            calculatePlannedGuarantyTrips();
-        }
-        return baPlannedGuarantyTrip;
-    }
-
-    public void setBaPlannedGuarantyTrip(TripPeriod baPlannedGuarantyTrip) {
-        this.baPlannedGuarantyTrip = baPlannedGuarantyTrip;
-    }
-
-    public TripPeriod getAbActualSubGuarantyTrip() {
-        if (!this.actualGuarantyTripsCreated) {
-            calculateActualGuarantyTrips();
-        }
-
-        return abActualSubGuarantyTrip;
-    }
-
-    public void setAbActualSubGuarantyTrip(TripPeriod abActualSubGuarantyTrip) {
-        this.abActualSubGuarantyTrip = abActualSubGuarantyTrip;
-    }
-
-    public TripPeriod getAbActualGuarantyTrip() {
-
-        if (!this.plannedGuarantyTripsCreated) {
-            calculateActualGuarantyTrips();
-        }
-        return abActualGuarantyTrip;
-    }
-
-    public void setAbActualGuarantyTrip(TripPeriod abActualGuarantyTrip) {
-        this.abActualGuarantyTrip = abActualGuarantyTrip;
-    }
-
-    public TripPeriod getBaActualSubGuarantyTrip() {
-
-        if (!this.plannedGuarantyTripsCreated) {
-            calculateActualGuarantyTrips();
-        }
-        return baActualSubGuarantyTrip;
-    }
-
-    public void setBaActualSubGuarantyTrip(TripPeriod baActualSubGuarantyTrip) {
-        this.baActualSubGuarantyTrip = baActualSubGuarantyTrip;
-    }
-
-    public TripPeriod getBaActualGuarantyTrip() {
-
-        if (!this.plannedGuarantyTripsCreated) {
-            calculateActualGuarantyTrips();
-        }
-        return baActualGuarantyTrip;
-    }
-
-    public void setBaActualGuarantyTrip(TripPeriod baActualGuarantyTrip) {
-        this.baActualGuarantyTrip = baActualGuarantyTrip;
-    }
-
-    public boolean isPlannedGuarantyTripsCreated() {
-        return plannedGuarantyTripsCreated;
-    }
-
-    public void setPlannedGuarantyTripsCreated(boolean plannedGuarantyTripsCreated) {
-        this.plannedGuarantyTripsCreated = plannedGuarantyTripsCreated;
-    }
-
-    public boolean isActualGuarantyTripsCreated() {
-        return actualGuarantyTripsCreated;
-    }
-
-    public void setActualGuarantyTripsCreated(boolean actualGuarantyTripsCreated) {
-        this.actualGuarantyTripsCreated = actualGuarantyTripsCreated;
-    }
-
-    private void calculatePlannedGuarantyTrips() {
-        createPlannedTimetebles();
-        TreeMap<LocalDateTime, TripPeriod> fakeAbPlannedTimetable = (TreeMap<LocalDateTime, TripPeriod>) this.abPlannedTimetable.clone();
-        TreeMap<LocalDateTime, TripPeriod> fakeBaPlannedTimetable = (TreeMap<LocalDateTime, TripPeriod>) this.baPlannedTimetable.clone();
-
-        this.abPlannedGuarantyTrip = fakeAbPlannedTimetable.pollLastEntry().getValue();
-        this.abPlannedSubGuarantyTrip = fakeAbPlannedTimetable.pollLastEntry().getValue();
-        if (fakeBaPlannedTimetable.size() > 0) {
-            this.baPlannedGuarantyTrip = fakeBaPlannedTimetable.pollLastEntry().getValue();
-            this.baPlannedSubGuarantyTrip = fakeBaPlannedTimetable.pollLastEntry().getValue();
-        } else {
-            System.out.println("Round route");
-        }
-        this.plannedGuarantyTripsCreated = true;
-    }
-
-    private void calculateActualGuarantyTrips() {
-        createActualTimetables();
-        TreeMap<LocalDateTime, TripPeriod> fakeAbActualTimetable = (TreeMap<LocalDateTime, TripPeriod>) this.abActualTimetable.clone();
-        TreeMap<LocalDateTime, TripPeriod> fakeBaActualTimetable = (TreeMap<LocalDateTime, TripPeriod>) this.baActualTimetable.clone();
-        this.abActualGuarantyTrip = fakeAbActualTimetable.pollLastEntry().getValue();
-        this.abActualSubGuarantyTrip = fakeAbActualTimetable.pollLastEntry().getValue();
-        if (fakeBaActualTimetable.size() > 0) {
-            this.baActualGuarantyTrip = fakeBaActualTimetable.pollLastEntry().getValue();
-            this.baActualSubGuarantyTrip = fakeBaActualTimetable.pollLastEntry().getValue();
-        } else {
-            System.out.println("Round route");
-        }
-        this.actualGuarantyTripsCreated = true;
     }
 
     private TreeMap<LocalDateTime, TripPeriod> addNullers(TreeMap<LocalDateTime, TripPeriod> timetable, ArrayList<TripPeriod> nullers) {
