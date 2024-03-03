@@ -141,6 +141,7 @@ public class Day {
                     String type = tripPeriod.getType();
                     LocalDateTime startTimeScheduled = tripPeriod.getStartTimeScheduled();
                     tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
+                    tripPeriod.setDriver(tripVoucher.getDriverName());
                     if (type.equals("ab")) {
                         this.abPlannedTimetable.put(startTimeScheduled, tripPeriod);
                     }
@@ -169,6 +170,7 @@ public class Day {
                     if (startTimeActual != null && arrivalTimeActual != null) {
 
                         tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
+                        tripPeriod.setDriver(tripVoucher.getDriverName());
                         if (type.equals("ab")) {
                             this.abActualTimetable.put(startTimeActual, tripPeriod);
                         }

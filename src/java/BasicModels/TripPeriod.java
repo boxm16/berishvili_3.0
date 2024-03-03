@@ -27,6 +27,8 @@ public class TripPeriod {
     private boolean spacialCase;
     private LocalDateTime fakeStartTimeActual;
 
+    private String driver;
+
     public TripPeriod() {
     }
 
@@ -164,7 +166,13 @@ public class TripPeriod {
     public void setFakeStartTimeActual(LocalDateTime fakeStartTimeActual) {
         this.fakeStartTimeActual = fakeStartTimeActual;
     }
-    
-    
+
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
 
 }

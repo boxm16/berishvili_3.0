@@ -65,7 +65,6 @@ public class GuarantyDay extends Day {
             this.baGuarantyTrip.setStartTimeScheduled(baPlannedGuarantyTrip.getStartTimeScheduled());
             this.baGuarantyTrip.setType(baPlannedGuarantyTrip.getType());
             this.baGuarantyTrip.setPlannedExodusNumber(baPlannedGuarantyTrip.getExoudsNumber());
-
             this.baGuarantyTrip.setGuarantyType("საგარანტიო");
 
         } else {
@@ -82,9 +81,11 @@ public class GuarantyDay extends Day {
         if (abActualGuarantyTrip.getStartTimeActual().isAfter(abPlannedGuarantyTrip.getStartTimeScheduled())) {
             this.abSubguarantyTrip.setStartTimeActual(abActualSubGuarantyTrip.getStartTimeActual());
             this.abSubguarantyTrip.setActualExodusNumber(abActualSubGuarantyTrip.getExoudsNumber());
+            this.abSubguarantyTrip.setDriver(abActualSubGuarantyTrip.getDriver());
 
             this.abGuarantyTrip.setStartTimeActual(abActualGuarantyTrip.getStartTimeActual());
             this.abGuarantyTrip.setActualExodusNumber(abActualGuarantyTrip.getExoudsNumber());
+            this.abGuarantyTrip.setDriver(abActualGuarantyTrip.getDriver());
 
         } else {
             Duration durationTillGuarantyTrip = Duration.between(abActualGuarantyTrip.getStartTimeActual(), abPlannedGuarantyTrip.getStartTimeScheduled());
@@ -100,13 +101,15 @@ public class GuarantyDay extends Day {
             if (durationTillGuarantyTripInSeconds <= durationTillSubGuarantyTripInSeconds) {
                 this.abSubguarantyTrip.setStartTimeActual(abActualSubGuarantyTrip.getStartTimeActual());
                 this.abSubguarantyTrip.setActualExodusNumber(abActualSubGuarantyTrip.getExoudsNumber());
+                this.abSubguarantyTrip.setDriver(abActualSubGuarantyTrip.getDriver());
 
                 this.abGuarantyTrip.setStartTimeActual(abActualGuarantyTrip.getStartTimeActual());
                 this.abGuarantyTrip.setActualExodusNumber(abActualGuarantyTrip.getExoudsNumber());
-
+                this.abGuarantyTrip.setDriver(abActualGuarantyTrip.getDriver());
             } else {
                 this.abSubguarantyTrip.setStartTimeActual(abActualGuarantyTrip.getStartTimeActual());
                 this.abSubguarantyTrip.setActualExodusNumber(abActualGuarantyTrip.getExoudsNumber());
+                this.abSubguarantyTrip.setDriver(abActualSubGuarantyTrip.getDriver());
 
                 this.abGuarantyTrip.setStartTimeActual(null);
             }
@@ -121,13 +124,14 @@ public class GuarantyDay extends Day {
             if (baActualGuarantyTrip.getStartTimeActual().isAfter(baPlannedGuarantyTrip.getStartTimeScheduled())) {
                 this.baSubguarantyTrip.setStartTimeActual(baActualSubGuarantyTrip.getStartTimeActual());
                 this.baSubguarantyTrip.setActualExodusNumber(baActualSubGuarantyTrip.getExoudsNumber());
+                this.baSubguarantyTrip.setDriver(baActualSubGuarantyTrip.getDriver());
 
                 this.baGuarantyTrip.setStartTimeActual(baActualGuarantyTrip.getStartTimeActual());
                 this.baGuarantyTrip.setActualExodusNumber(baActualGuarantyTrip.getExoudsNumber());
-
+                this.baGuarantyTrip.setDriver(baActualGuarantyTrip.getDriver());
             } else {
-                Duration durationTillGuarantyTrip = Duration.between(baActualGuarantyTrip.getStartTimeActual(), abPlannedGuarantyTrip.getStartTimeScheduled());
-                Duration durationTillSubGuarantyTrip = Duration.between(baActualGuarantyTrip.getStartTimeActual(), abPlannedSubGuarantyTrip.getStartTimeScheduled());
+                Duration durationTillGuarantyTrip = Duration.between(baActualGuarantyTrip.getStartTimeActual(), baPlannedGuarantyTrip.getStartTimeScheduled());
+                Duration durationTillSubGuarantyTrip = Duration.between(baActualGuarantyTrip.getStartTimeActual(), baPlannedSubGuarantyTrip.getStartTimeScheduled());
                 long durationTillGuarantyTripInSeconds = durationTillGuarantyTrip.getSeconds();
                 long durationTillSubGuarantyTripInSeconds = durationTillSubGuarantyTrip.getSeconds();
                 if (durationTillGuarantyTripInSeconds < 0) {
@@ -139,13 +143,16 @@ public class GuarantyDay extends Day {
                 if (durationTillGuarantyTripInSeconds <= durationTillSubGuarantyTripInSeconds) {
                     this.baSubguarantyTrip.setStartTimeActual(baActualSubGuarantyTrip.getStartTimeActual());
                     this.baSubguarantyTrip.setActualExodusNumber(baActualSubGuarantyTrip.getExoudsNumber());
+                    this.baSubguarantyTrip.setDriver(baActualSubGuarantyTrip.getDriver());
 
                     this.baGuarantyTrip.setStartTimeActual(baActualGuarantyTrip.getStartTimeActual());
                     this.baGuarantyTrip.setActualExodusNumber(baActualGuarantyTrip.getExoudsNumber());
+                    this.baGuarantyTrip.setDriver(baActualGuarantyTrip.getDriver());
 
                 } else {
                     this.baSubguarantyTrip.setStartTimeActual(baActualGuarantyTrip.getStartTimeActual());
                     this.baSubguarantyTrip.setActualExodusNumber(baActualGuarantyTrip.getExoudsNumber());
+                    this.baSubguarantyTrip.setDriver(baActualSubGuarantyTrip.getDriver());
 
                     this.baGuarantyTrip.setStartTimeActual(null);
                 }
