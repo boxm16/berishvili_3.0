@@ -17,7 +17,6 @@ public class GuarantyTrip extends TripPeriod {
 
     private String routeNumber;
     private String dateStamp;
-    private String baseNumber;
 
     private String aPoint;
     private String bPoint;
@@ -30,14 +29,6 @@ public class GuarantyTrip extends TripPeriod {
 
     public GuarantyTrip() {
 
-    }
-
-    public String getBaseNumber() {
-        return baseNumber;
-    }
-
-    public void setBaseNumber(String baseNumber) {
-        this.baseNumber = baseNumber;
     }
 
     public String getRouteNumber() {
