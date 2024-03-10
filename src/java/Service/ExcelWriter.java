@@ -277,7 +277,7 @@ public class ExcelWriter {
                 }
 
                 Cell cell_8 = row.createCell(8);
-                cell_8.setCellValue(guarantyTrip.getStartTimeActual());
+                cell_8.setCellValue(guarantyTrip.getStartTimeActualString());
                 if (guarantyTrip.isSpacialCase()) {
                     cell_8.setCellStyle(rowStyleRedTimeHHmmss);
                 } else {
