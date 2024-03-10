@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -104,18 +105,18 @@ public class GuarantyController {
     }
 
     @RequestMapping(value = "exportGuarantyTrips", method = RequestMethod.POST)
-    public String exportGuarantyTrips(String fileName, ModelMap model) {
+    public String exportGuarantyTrips(String fileName, ModelMap model, HttpServletRequest request) {
         System.out.println("---------------Guaranty Trips Excel Export Starting ------------------------------");
         ArrayList guarantyData = getGuarantyTrips();
         System.out.println("---Guaranty Trips Excel Export Data Created------");
-
+        System.out.println("GDS: "+guarantyData.size());
         //now write the results
         ExcelWriter excelWriter = new ExcelWriter();
 
         System.out.println("---Writing Excel File Started---");
 
         //excelWriter.exportTripPeriodsAndRoutesAverages(tripPeriods, routesAveragesTreeMap, percents, fileName);
-        excelWriter.SXSSF_GuarantyTrips(guarantyData, fileName);
+        excelWriter.SXSSF_GuarantyTrips(guarantyData, fileName, request);
 
         model.addAttribute("excelExportLink", "exportGuarantyTrips.htm");
         model.addAttribute("fileName", fileName);
