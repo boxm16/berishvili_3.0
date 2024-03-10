@@ -29,6 +29,8 @@ public class TripPeriod {
 
     private String driver;
 
+    private short baseNumber;
+
     public TripPeriod() {
     }
 
@@ -173,6 +175,14 @@ public class TripPeriod {
 
     public void setDriver(String driver) {
         this.driver = driver;
+    }
+
+    public short getBaseNumber() {
+        return baseNumber;
+    }
+
+    public void setBaseNumber(short baseNumber) {
+        this.baseNumber = baseNumber;
     }
 
 }

@@ -142,6 +142,7 @@ public class Day {
                     LocalDateTime startTimeScheduled = tripPeriod.getStartTimeScheduled();
                     tripPeriod.setExoudsNumber(exoduseEntry.getValue().getNumber());
                     tripPeriod.setDriver(tripVoucher.getDriverName());
+                    tripPeriod.setBaseNumber(tripVoucher.getBaseNumber());
                     if (type.equals("ab")) {
                         this.abPlannedTimetable.put(startTimeScheduled, tripPeriod);
                     }

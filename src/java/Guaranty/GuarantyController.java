@@ -49,22 +49,33 @@ public class GuarantyController {
 
                 abSubguarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
                 abSubguarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                abSubguarantyTrip.setaPoint(plannedRoutesEntry.getValue().getaPoint());
+                abSubguarantyTrip.setbPoint(plannedRoutesEntry.getValue().getbPoint());
                 guarantyTrips.add(abSubguarantyTrip);
 
                 GuarantyTrip abGuarantyTrip = guarantyDay.getAbGuarantyTrip();
                 abGuarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
                 abGuarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                abGuarantyTrip.setaPoint(plannedRoutesEntry.getValue().getaPoint());
+                abGuarantyTrip.setbPoint(plannedRoutesEntry.getValue().getbPoint());
+
                 guarantyTrips.add(abGuarantyTrip);
                 if (guarantyDay.getBaGuarantyTrip() == null) {
                 } else {
                     GuarantyTrip baSubguarantyTrip = guarantyDay.getBaSubguarantyTrip();
                     baSubguarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
                     baSubguarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                    baSubguarantyTrip.setaPoint(plannedRoutesEntry.getValue().getaPoint());
+                    baSubguarantyTrip.setbPoint(plannedRoutesEntry.getValue().getbPoint());
+
                     guarantyTrips.add(baSubguarantyTrip);
 
                     GuarantyTrip baGuarantyTrip = guarantyDay.getBaGuarantyTrip();
                     baGuarantyTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
                     baGuarantyTrip.setDateStamp(plannedDay.getDateStamp());
+                    baGuarantyTrip.setaPoint(plannedRoutesEntry.getValue().getaPoint());
+                    baGuarantyTrip.setbPoint(plannedRoutesEntry.getValue().getbPoint());
+
                     guarantyTrips.add(baGuarantyTrip);
                 }
             }

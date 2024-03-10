@@ -41,11 +41,13 @@ public class GuarantyDay extends Day {
         this.abSubguarantyTrip.setStartTimeScheduled(abPlannedSubGuarantyTrip.getStartTimeScheduled());
         this.abSubguarantyTrip.setType(abPlannedSubGuarantyTrip.getType());
         this.abSubguarantyTrip.setPlannedExodusNumber(abPlannedSubGuarantyTrip.getExoudsNumber());
+        this.abSubguarantyTrip.setBaseNumber(abPlannedSubGuarantyTrip.getBaseNumber());
         this.abSubguarantyTrip.setGuarantyType("ქვე-საგარანტიო");
 
         this.abGuarantyTrip.setStartTimeScheduled(abPlannedGuarantyTrip.getStartTimeScheduled());
         this.abGuarantyTrip.setType(abPlannedGuarantyTrip.getType());
         this.abGuarantyTrip.setPlannedExodusNumber(abPlannedGuarantyTrip.getExoudsNumber());
+        this.abGuarantyTrip.setBaseNumber(abPlannedGuarantyTrip.getBaseNumber());
         this.abGuarantyTrip.setGuarantyType("საგარანტიო");
 
         TripPeriod baPlannedGuarantyTrip = null;
@@ -60,11 +62,13 @@ public class GuarantyDay extends Day {
             this.baSubguarantyTrip.setStartTimeScheduled(baPlannedSubGuarantyTrip.getStartTimeScheduled());
             this.baSubguarantyTrip.setType(baPlannedSubGuarantyTrip.getType());
             this.baSubguarantyTrip.setPlannedExodusNumber(baPlannedSubGuarantyTrip.getExoudsNumber());
+            this.baSubguarantyTrip.setBaseNumber(baPlannedSubGuarantyTrip.getBaseNumber());
             this.baSubguarantyTrip.setGuarantyType("ქვე-საგარანტიო");
 
             this.baGuarantyTrip.setStartTimeScheduled(baPlannedGuarantyTrip.getStartTimeScheduled());
             this.baGuarantyTrip.setType(baPlannedGuarantyTrip.getType());
             this.baGuarantyTrip.setPlannedExodusNumber(baPlannedGuarantyTrip.getExoudsNumber());
+            this.baGuarantyTrip.setBaseNumber(baPlannedGuarantyTrip.getBaseNumber());
             this.baGuarantyTrip.setGuarantyType("საგარანტიო");
 
         } else {
