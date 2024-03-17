@@ -12,6 +12,8 @@ public class Basement {
             return "C:\\Users\\Michail Sitmalidis\\berishvili_3.0";
         } else if (getApplicationHostName().equals("DESKTOP-O61QDDT")) {
             return "D:\\berishvili";
+        } else if (getApplicationHostName().equals("DESKTOP-RJIL951")) {
+            return "D:\\berishvili";
         } else if (getApplicationHostName().equals("amazon-server")) {
             return "C:\\berishvili";
         } else {
