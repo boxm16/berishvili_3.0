@@ -115,21 +115,14 @@ public class GuarantyTrip extends TripPeriod {
         if (this.getStartTimeActual() != null) {
             Duration between = Duration.between(this.getStartTimeScheduled(), this.getStartTimeActual());
             long seconds = between.getSeconds();
-            if (seconds < 0) {
-                seconds = seconds * -1;
-            }
-
-            if (seconds < 60) {
-                return "inherited";
-            }
-            if (seconds >= 61 && seconds < 300) {
-                return "yellow";
-            }
-            if (seconds >= 300) {
+            if (seconds >= 300 || seconds <= -180) {
                 return "red";
             }
+            if (seconds >= 61 && seconds < 300 || seconds > -180 && seconds < 300) {
+                return "yellow";
+            }
         } else {
-            return "inherited";
+            return "red";
         }
         return "inherited";
     }

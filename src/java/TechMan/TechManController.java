@@ -19,6 +19,9 @@ public class TechManController {
 
     @RequestMapping(value = "/techMan", method = RequestMethod.GET)
     public String techMan(ModelMap model) {
+        
+        
+        
         String hostName = this.basement.getApplicationHostName();
         model.addAttribute("hostName", hostName);
 
