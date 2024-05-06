@@ -330,7 +330,12 @@
             </div>
             <nav id="sidebar">
                 <div class="sidebar-header" style="background-color: green">
-                    <h3> <a href="http://ec2-34-242-152-35.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>
+                    <!--      <h3> <a href="http://ec2-34-242-152-35.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>  -->
+                    <a href="http://ec2-34-254-173-194.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3>
+                    <!--    <h3> <a href="http://ec2-3-252-66-18.eu-west-1.compute.amazonaws.com:8080/berishvili/index.htm">ძველ ვერსიაზე გადასვლა</a> </h3> -->
+
+
+
                 </div>
                 <div class="sidebar-header">
                     <!--- <h3>ფუნქციები</h3> ---->
@@ -347,24 +352,34 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li>
                         <a href="#guarantySubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>საგარანტიო</h3></a>
                         <ul class="collapse list-unstyled" id="guarantySubmenue">
                             <li>
                                 <a href="#" onclick="requestRouter('guarantyTrips.htm')"><h4>დათვალიერება</h4></a>
                             </li>
-                           
+
                         </ul>
                     </li>
-                    
+
+                    <li>
+                        <a href="#firstTripsSubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>პირველი რეისების ანალიზი</h3></a>
+                        <ul class="collapse list-unstyled" id="firstTripsSubmenue">
+                            <li>
+                                <a href="#" onclick="requestRouter('firstTrips.htm')"><h4>დათვალიერება</h4></a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     <li>
                         <a href="#analysisSubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>ანალიზი</h3></a>
                         <ul class="collapse list-unstyled" id="analysisSubmenue">
                             <li>
                                 <a href="#" onclick="requestRouter('analysis.htm')"><h4>დათვალიერება</h4></a>
                             </li>
-                           
+
                         </ul>
                     </li>
                 </ul>
@@ -379,7 +394,7 @@
                     <li>
                         <a href="techMan.htm"><h3>techMan</h3></a>
                     </li>
-                    
+
                 </ul>
 
             </nav>

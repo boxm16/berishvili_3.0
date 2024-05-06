@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Guaranty;
+package FirstTrips;
 
 import BasicModels.Day;
 import BasicModels.Exodus;
@@ -28,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Michail Sitmalidis
  */
-public class GuarantyDao {
+public class FirstTripDao {
 
     @Autowired
     private DataBaseConnection dataBaseConnection;
@@ -45,7 +45,7 @@ public class GuarantyDao {
 
         query = queryBuilderInitialPart.append(queryBuilderRouteNumberPart).
                 append(" AND date_stamp IN ").append(queryBuilderDateStampPart).
-                append(" ORDER BY  route_number, date_stamp, exodus_number, start_time;");
+                append(" ORDER BY  route_number, date_stamp, exodus_number;");
 
         try {
             connection = dataBaseConnection.getConnection();
@@ -110,7 +110,7 @@ public class GuarantyDao {
             statement.close();
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(GuarantyDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FirstTripDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return routes;
@@ -119,14 +119,14 @@ public class GuarantyDao {
     public HashMap<String, Route> getActualRoutes(RequestData requestedData) {
         HashMap<String, Route> routes = new HashMap();
         StringBuilder query = new StringBuilder();
-        StringBuilder queryBuilderInitialPart = new StringBuilder("SELECT base_number, route_number, bus_number, driver_name, exodus_number, date_stamp, t2.number,  notes, type, start_time_actual, arrival_time_actual FROM route t1 INNER JOIN trip_voucher t2 ON t1.number=t2.route_number INNER JOIN trip_period t3 ON t2.number=t3.trip_voucher_number WHERE route_number IN ");
+        StringBuilder queryBuilderInitialPart = new StringBuilder("SELECT base_number, route_number, bus_number, driver_number, driver_name, exodus_number, date_stamp, t2.number,  notes, type, start_time_actual, arrival_time_actual FROM route t1 INNER JOIN trip_voucher t2 ON t1.number=t2.route_number INNER JOIN trip_period t3 ON t2.number=t3.trip_voucher_number WHERE route_number IN ");
 
         StringBuilder queryBuilderRouteNumberPart = buildStringFromArrayList(requestedData.getRoutes());
         StringBuilder queryBuilderDateStampPart = buildStringFromArrayList(requestedData.getDates());
 
         query = queryBuilderInitialPart.append(queryBuilderRouteNumberPart).
                 append(" AND date_stamp IN ").append(queryBuilderDateStampPart).
-                append(" ORDER BY route_number, date_stamp, exodus_number, start_time_actual;");
+                append(" ORDER BY route_number, date_stamp, exodus_number;");
 
         try {
             connection = dataBaseConnection.getConnection();
@@ -175,6 +175,7 @@ public class GuarantyDao {
 
                 newTripPeriod.setType(resultSet.getString("type"));
                 tripVoucher.setBusNumber(resultSet.getString("bus_number"));
+                tripVoucher.setDriverNumber(resultSet.getString("driver_number"));
                 tripVoucher.setDriverName(resultSet.getString("driver_name"));
 
                 newTripPeriod.setStartTimeActual(converter.convertStringTimeToDate(resultSet.getString("start_time_actual")));
@@ -189,7 +190,7 @@ public class GuarantyDao {
             statement.close();
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(GuarantyDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FirstTripDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return routes;
