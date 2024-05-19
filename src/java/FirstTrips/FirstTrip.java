@@ -111,10 +111,8 @@ public class FirstTrip extends GuarantyTrip {
     public void setDriverName(String driverName) {
         this.driverName = driverName;
     }
-    
-    
-    
-     public String getStartTimeDifferenceString() {
+
+    public String getStartTimeDifferenceString() {
         if (this.getStartTimeActual() != null) {
             Converter converter = new Converter();
             return converter.convertDurationToString(Duration.between(this.getStartTimeScheduled(), this.getStartTimeActual()));
@@ -123,4 +121,18 @@ public class FirstTrip extends GuarantyTrip {
         }
     }
 
+    public String getStartTimeDifferenceColorString() {
+
+        if (this.getStartTimeActual() != null) {
+            Duration between = Duration.between(this.getStartTimeScheduled(), this.getStartTimeActual());
+            long seconds = between.getSeconds();
+            if (seconds >= 180 || seconds <= -180) {
+                return "red";
+            }
+
+            return "inherited";
+        } else {
+            return "red";
+        }
+    }
 }
