@@ -229,7 +229,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
                     <div class="container-fluid">
 
-                        <a class="btn btn-primary" href="goForNewActualDataUpload.htm" style="font-size: 20px">ახალი მონაცემების ატვირთვა</a>
+                        <a class="btn btn-primary" href="goForActualDataUpload.htm" style="font-size: 20px">ახალი მონაცემების ატვირთვა</a>
 
 
                         <div style="margin-left: 5%;"> 

@@ -49,7 +49,7 @@ public class ActualRouteFactory {
 
     private TreeMap<String, Route> convertExcelDataToRoutes(HashMap<String, String> data) {
         TreeMap<String, Route> routes = new TreeMap<>();
-        int excelRowIndex = 18;
+        int excelRowIndex =7;
 
         while (!data.isEmpty()) {
             String routeNumberLocationInTheRow = new StringBuilder("I").append(String.valueOf(excelRowIndex)).toString();
