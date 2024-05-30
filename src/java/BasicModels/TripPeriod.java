@@ -112,10 +112,15 @@ public class TripPeriod {
                 return "A_B";
             case "ba":
                 return "B_A";
+            case "1ab":
+                return "1_A_B";
+            case "1ba":
+                return "1_B_A";
             case "A_baseReturn":
                 return "A_ბაზა";
             case "B_baseReturn":
                 return "B_ბაზა";
+
             default:
                 return "";
         }

@@ -204,6 +204,11 @@ public class PlannedRouteFactory {
                 for (TripPeriod tp : tripPeriodsOfRound) {
                     tripPeriods.add(tp);
                 }
+            case "1 round":
+                ArrayList<TripPeriod> firstTripPeriods = createFirstTripPerids(data, rowIndex);
+                for (TripPeriod tp : firstTripPeriods) {
+                    tripPeriods.add(tp);
+                }
                 break;
         }
         tripVoucher.setTripPeriods(tripPeriods);
@@ -221,8 +226,13 @@ public class PlannedRouteFactory {
             return "baseReturn";
         }
         if (tripPeriodDescription.contains("ბრუნი")) {
-            return "round";
+            if (tripPeriodDescription.contains("1 ბრუნი")) {
+                return "1 round";
+            } else {
+                return "round";
+            }
         }
+
         return tripPeriodDescription;
     }
 
@@ -353,5 +363,45 @@ public class PlannedRouteFactory {
         //   arrivalTimeDifference = arrivalTimeDifference.replace("'", "");
         //}
         return new TripPeriod(tripPeriodType, startTimeScheduled, null, null, arrivalTimeScheduled, null, null);
+    }
+
+    private ArrayList<TripPeriod> createFirstTripPerids(HashMap<String, String> data, int rowIndex) {
+        ArrayList<TripPeriod> tripPeriodsOfRound = new ArrayList();
+        String leftSideAnchor = new StringBuilder("V").append(String.valueOf(rowIndex)).toString();
+        String rightSideAnchor = new StringBuilder("AB").append(String.valueOf(rowIndex)).toString();
+        if (data.containsKey(leftSideAnchor) && data.containsKey(rightSideAnchor)) {
+            LocalDateTime leftSideTime = this.converter.convertStringTimeToDate(data.get(leftSideAnchor));
+            LocalDateTime rightSideTime = this.converter.convertStringTimeToDate(data.get(rightSideAnchor));
+            if (leftSideTime.isBefore(rightSideTime)) {
+                String tripPeriodType = "1ab";
+                TripPeriod tripPeriodAB = createTripPeriodFromLeftSide(data, rowIndex, tripPeriodType);
+                tripPeriodsOfRound.add(tripPeriodAB);
+                tripPeriodType = "1ba";
+                TripPeriod tripPeriodBA = createTripPeriodFromRightSide(data, rowIndex, tripPeriodType);
+                tripPeriodsOfRound.add(tripPeriodBA);
+                return tripPeriodsOfRound;
+            } else {
+                String tripPeriodType = "1ba";
+                TripPeriod tripPeriodBA = createTripPeriodFromRightSide(data, rowIndex, tripPeriodType);
+                tripPeriodsOfRound.add(tripPeriodBA);
+                tripPeriodType = "1ab";
+                TripPeriod tripPeriodAB = createTripPeriodFromLeftSide(data, rowIndex, tripPeriodType);
+                tripPeriodsOfRound.add(tripPeriodAB);
+                return tripPeriodsOfRound;
+            }
+        }
+        if (data.containsKey(leftSideAnchor)) {
+            String tripPeriodType = "1ab";
+            TripPeriod tripPeriod = createTripPeriodFromLeftSide(data, rowIndex, tripPeriodType);
+            tripPeriodsOfRound.add(tripPeriod);
+            return tripPeriodsOfRound;
+        }
+        if (data.containsKey(rightSideAnchor)) {
+            String tripPeriodType = "1ba";
+            TripPeriod tripPeriod = createTripPeriodFromRightSide(data, rowIndex, tripPeriodType);
+            tripPeriodsOfRound.add(tripPeriod);
+            return tripPeriodsOfRound;
+        }
+        return tripPeriodsOfRound;
     }
 }

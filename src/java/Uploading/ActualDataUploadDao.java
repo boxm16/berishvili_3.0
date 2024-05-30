@@ -49,7 +49,7 @@ public class ActualDataUploadDao {
 
             System.out.println(now1 + ": Starting INSERTION: ....");
             for (Map.Entry<String, Route> routeEntry : routesFromExcelFile.entrySet()) {
-                System.out.println("Inserting route data. Route Number:" + routeEntry.getValue().getNumber());
+             //   System.out.println("++++++++Inserting route data. Route Number:" + routeEntry.getValue().getNumber());
                 TreeMap<String, Day> days = routeEntry.getValue().getDays();
                 for (Map.Entry<String, Day> dayEntry : days.entrySet()) {
                     String dateStamp = dayEntry.getValue().getDateStamp();
