@@ -226,7 +226,7 @@ public class PlannedRouteFactory {
             return "baseReturn";
         }
         if (tripPeriodDescription.contains("ბრუნი")) {
-            if (tripPeriodDescription.contains("1 ბრუნი")) {
+            if (tripPeriodDescription.equals("1 ბრუნი")) {
                 return "1 round";
             } else {
                 return "round";

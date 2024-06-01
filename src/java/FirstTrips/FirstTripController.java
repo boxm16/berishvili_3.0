@@ -73,31 +73,48 @@ public class FirstTripController {
                     TripPeriod plannedBaseTripPeriod = plannedTripPeriods.get(0);
                     TripPeriod plannedFirstTripPeriod = plannedTripPeriods.get(1);
 
-                    Map.Entry<String, TripVoucher> actualTripVoucher = actualTripVouchers.pollFirstEntry();
-                    ArrayList<TripPeriod> actualTripPeriods = actualTripVoucher.getValue().getTripPeriods();
+                    for (Map.Entry<String, TripVoucher> actualTripVoucherEntrySet : actualTripVouchers.entrySet()) {
 
-                    TripPeriod actualBaseTripPeriod = actualTripPeriods.get(0);
-                    TripPeriod actualFirstTripPeriod = actualTripPeriods.get(1);
+                        TripVoucher actualTripVoucher = actualTripVoucherEntrySet.getValue();
+                        ArrayList<TripPeriod> actualTripPeriods = actualTripVoucher.getTripPeriods();
+                        TripPeriod actualBaseTripPeriod = null;
+                        TripPeriod actualFirstTripPeriod = null;
+                        boolean eligibleTripVoucher = false;
+                        for (TripPeriod actualTripPeriod : actualTripPeriods) {
+                            if (actualTripPeriod.getType().contains("baseLeaving")) {
+                                actualBaseTripPeriod = actualTripPeriod;
+                            }
+                            if (actualTripPeriod.getType().equals("1ab") || actualTripPeriod.getType().equals("1ba")) {
+                                actualFirstTripPeriod = actualTripPeriod;
+                                eligibleTripVoucher = true;
+                                break;
+                            }
 
-                    FirstTrip firstTrip = new FirstTrip();
-                    firstTrip.setDateStamp(plannedDay.getDateStamp());
-                    firstTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
-                    firstTrip.setBaseNumber(plannedTripVoucher.getValue().getBaseNumber());
+                        }
+                        if (eligibleTripVoucher) {
+                            FirstTrip firstTrip = new FirstTrip();
+                            firstTrip.setDateStamp(plannedDay.getDateStamp());
+                            firstTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
+                            firstTrip.setBaseNumber(plannedTripVoucher.getValue().getBaseNumber());
+                            firstTrip.setExoudsNumber(exodusNumber);
 
-                    firstTrip.setBaseTripStartTimeScheduled(plannedBaseTripPeriod.getStartTimeScheduled());
-                    firstTrip.setBaseTripEndTimeScheduled(plannedBaseTripPeriod.getArrivalTimeScheduled());
+                            firstTrip.setBaseTripStartTimeScheduled(plannedBaseTripPeriod.getStartTimeScheduled());
+                            firstTrip.setBaseTripEndTimeScheduled(plannedBaseTripPeriod.getArrivalTimeScheduled());
 
-                    firstTrip.setBaseTripStartTimeActual(actualBaseTripPeriod.getStartTimeActual());
-                    firstTrip.setBaseTripEndTimeActual(actualBaseTripPeriod.getArrivalTimeActual());
+                            firstTrip.setBaseTripStartTimeActual(actualBaseTripPeriod.getStartTimeActual());
+                            firstTrip.setBaseTripEndTimeActual(actualBaseTripPeriod.getArrivalTimeActual());
 
-                    firstTrip.setStartTimeScheduled(plannedFirstTripPeriod.getStartTimeScheduled());
-                    firstTrip.setStartTimeActual(actualFirstTripPeriod.getStartTimeActual());
+                            firstTrip.setStartTimeScheduled(plannedFirstTripPeriod.getStartTimeScheduled());
+                            firstTrip.setStartTimeActual(actualFirstTripPeriod.getStartTimeActual());
 
-                    firstTrip.setBusNumber(actualTripVoucher.getValue().getBusNumber());
-                    firstTrip.setDriverNumber(actualTripVoucher.getValue().getDriverNumber());
-                    firstTrip.setDriverName(actualTripVoucher.getValue().getDriverName());
+                            firstTrip.setBusNumber(actualTripVoucher.getBusNumber());
+                            firstTrip.setDriverNumber(actualTripVoucher.getDriverNumber());
+                            firstTrip.setDriverName(actualTripVoucher.getDriverName());
 
-                    firstTrips.add(firstTrip);
+                            firstTrips.add(firstTrip);
+                            break;
+                        }
+                    }
                 }
             }
         }

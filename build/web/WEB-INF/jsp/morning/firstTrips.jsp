@@ -291,6 +291,7 @@
                             <th>თარიღი</th>
                             <th>ა/ბაზა</th>
                             <th>მარშ. #</th>
+                            <th>გასვლ. #</th>
 
                             <th>სახ.#</th>
                             <th>ტაბელის #</th>
@@ -313,6 +314,7 @@
                                 <td  style="width: 100px;" align="center">${firstTrips.dateStamp}</td>
                                 <td align="center">${firstTrips.baseNumber}</td>
                                 <td align="center">${firstTrips.routeNumber}</td>
+                                <td align="center">${firstTrips.exoudsNumber}</td>
                                 <td align="center">${firstTrips.busNumber}</td>
                                 <td align="center">${firstTrips.driverNumber}</td>
                                 <td align="center">${firstTrips.driverName}</td>
