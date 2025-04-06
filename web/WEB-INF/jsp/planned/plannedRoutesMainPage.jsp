@@ -333,10 +333,10 @@
                     <li>
                         <a href="#" onclick="requestRouter('plannedRoutes.htm')"><h4>მარშრუტების დათვალიერება</h4></a>
                     </li>
-                    <li>
-                        <a href="#" onclick="requestRouter('plannedRoutesSummary.htm')"><h4>SAXELI VER MOVIPIQRE</h4></a>
-                    </li>
-
+                    <!--  <li>
+                          <a href="#" onclick="requestRouter('plannedRoutesSummary.htm')"><h4>SAXELI VER MOVIPIQRE</h4></a>
+                      </li>
+                    -->
                 </ul>
 
             </nav>

@@ -26,7 +26,7 @@ public class FirstTripController {
     private RequestData requestedData;
 
     @RequestMapping(value = "firstTrips")
-    public String giarantyTrips(@RequestParam("routes:dates") String requestedRoutesDates, ModelMap modelMap, HttpSession session) {
+    public String firstTrips(@RequestParam("routes:dates") String requestedRoutesDates, ModelMap modelMap, HttpSession session) {
 
         RequestDataDecoder requestDataDecoder = new RequestDataDecoder();
 
@@ -67,11 +67,28 @@ public class FirstTripController {
                     TreeMap<String, TripVoucher> plannedTripVouchers = plannedExodus.getTripVouchers();
                     TreeMap<String, TripVoucher> actualTripVouchers = actualExodus.getTripVouchers();
 
-                    Map.Entry<String, TripVoucher> plannedTripVoucher = plannedTripVouchers.pollFirstEntry();
-                    ArrayList<TripPeriod> plannedTripPeriods = plannedTripVoucher.getValue().getTripPeriods();
+                    TripVoucher plannedTripVoucher = new TripVoucher();
+                    TripPeriod plannedBaseTripPeriod = null;
+                    TripPeriod plannedFirstTripPeriod = null;
+                    boolean rightTripVoucherFound = false;
+                    for (Map.Entry<String, TripVoucher> plannedTripVoucherEntrySet : plannedTripVouchers.entrySet()) {
+                        plannedTripVoucher = plannedTripVoucherEntrySet.getValue();
+                        ArrayList<TripPeriod> plannedTripPeriods = plannedTripVoucher.getTripPeriods();
 
-                    TripPeriod plannedBaseTripPeriod = plannedTripPeriods.get(0);
-                    TripPeriod plannedFirstTripPeriod = plannedTripPeriods.get(1);
+                        for (TripPeriod plannedTripPeriod : plannedTripPeriods) {
+                            if (plannedTripPeriod.getType().contains("baseLeaving")) {
+                                plannedBaseTripPeriod = plannedTripPeriod;
+                            }
+                            if (plannedTripPeriod.getType().equals("1ab") || plannedTripPeriod.getType().equals("1ba")) {
+                                plannedFirstTripPeriod = plannedTripPeriod;
+                                rightTripVoucherFound = true;
+                                break;
+                            }
+                            if (rightTripVoucherFound) {
+                                break;
+                            }
+                        }
+                    }
 
                     for (Map.Entry<String, TripVoucher> actualTripVoucherEntrySet : actualTripVouchers.entrySet()) {
 
@@ -95,7 +112,7 @@ public class FirstTripController {
                             FirstTrip firstTrip = new FirstTrip();
                             firstTrip.setDateStamp(plannedDay.getDateStamp());
                             firstTrip.setRouteNumber(plannedRoutesEntry.getValue().getNumber());
-                            firstTrip.setBaseNumber(plannedTripVoucher.getValue().getBaseNumber());
+                            firstTrip.setBaseNumber(plannedTripVoucher.getBaseNumber());
                             firstTrip.setExoudsNumber(exodusNumber);
 
                             firstTrip.setBaseTripStartTimeScheduled(plannedBaseTripPeriod.getStartTimeScheduled());
@@ -106,6 +123,7 @@ public class FirstTripController {
 
                             firstTrip.setStartTimeScheduled(plannedFirstTripPeriod.getStartTimeScheduled());
                             firstTrip.setStartTimeActual(actualFirstTripPeriod.getStartTimeActual());
+                            firstTrip.setArrivalTimeActual(actualFirstTripPeriod.getArrivalTimeActual());
 
                             firstTrip.setBusNumber(actualTripVoucher.getBusNumber());
                             firstTrip.setDriverNumber(actualTripVoucher.getDriverNumber());

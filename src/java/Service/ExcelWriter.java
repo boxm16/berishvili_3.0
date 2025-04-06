@@ -699,12 +699,15 @@ public class ExcelWriter {
 
                 Cell cell_12 = row.createCell(12);
                 cell_12.setCellValue(trip.getStartTimeActualString());
-                if (dayIndex % 2 == 0) {
-                    cell_12.setCellStyle(rowStyleWhiteTimeHHmmss);
+                if (trip.getActualArrivalTimeColor().equals("red")) {
+                    cell_12.setCellStyle(rowStyleRedTimeHHmmss);
                 } else {
-                    cell_12.setCellStyle(rowStyleWhiteTimeHHmmss);
+                    if (dayIndex % 2 == 0) {
+                        cell_12.setCellStyle(rowStyleWhiteTimeHHmmss);
+                    } else {
+                        cell_12.setCellStyle(rowStyleWhiteTimeHHmmss);
+                    }
                 }
-
                 Cell cell_13 = row.createCell(13);
                 cell_13.setCellValue(trip.getStartTimeDifferenceString());
                 if (trip.getStartTimeDifferenceColorString().equals("red")) {

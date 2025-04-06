@@ -135,4 +135,13 @@ public class FirstTrip extends GuarantyTrip {
             return "red";
         }
     }
+
+    public String getActualArrivalTimeColor() {
+
+        if (this.getArrivalTimeActual() == null) {
+            return "red";
+        } else {
+            return "inherited";
+        }
+    }
 }

@@ -389,11 +389,9 @@
                         <a href="routes.htm" target="_blank"><h3>მარშრუტები</h3></a>
                     </li>
                     <li>
-                        <a href="#" onclick="requestRouter('plannedRoutesMainPage.htm')"><h3>დაგემილი</h3></a>
+                        <a href="#" onclick="requestRouter('plannedRoutesMainPage.htm')"><h3>გეგმიური</h3></a>
                     </li> 
-                    <li>
-                        <a href="techMan.htm"><h3>techMan</h3></a>
-                    </li>
+                
 
                 </ul>
 

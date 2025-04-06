@@ -23,7 +23,7 @@ public class PlannedDataUploadController {
 
     @RequestMapping(value = "goForPlannedDataUpload")
     public String goForPlannedDataUpload(ModelMap model) {
-        model.addAttribute("uploadTitle", "დაგეგმილი მონაცემების ატვირთვა");
+        model.addAttribute("uploadTitle", "გეგმიური მონაცემების ატვირთვა");
         model.addAttribute("uploadTarget", "uploadPlannedData.htm");
         return "upload";
     }

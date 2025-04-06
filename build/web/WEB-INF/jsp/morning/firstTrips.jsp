@@ -326,7 +326,7 @@
                                 <td align="center">${firstTrips.baseTripEndTimeActualString}</td>
 
                                 <td align="center">${firstTrips.startTimeScheduledString}</td>
-                                <td align="center">${firstTrips.startTimeActualString}</td>
+                                <td align="center" style="background-color:${firstTrips.getActualArrivalTimeColor()}">${firstTrips.startTimeActualString}</td>
                                 <td align="center" style="background-color:${firstTrips.startTimeDifferenceColorString}">${firstTrips.startTimeDifferenceString}</td>
 
                             </tr>
