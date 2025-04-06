@@ -377,6 +377,12 @@
                         <a href="#analysisSubmenue" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><h3>ანალიზი</h3></a>
                         <ul class="collapse list-unstyled" id="analysisSubmenue">
                             <li>
+                                <a href="#" onclick="requestRouter('goForDriverAnalysisDataUpload.htm')"><h4>ატვირთვა</h4></a>
+                            </li>
+                            <li>
+                                <a href="#" onclick="requestRouter('driverDataAnalysis.htm')"><h4>ანალიზი</h4></a>
+                            </li>
+                            <li>
                                 <a href="#" onclick="requestRouter('analysis.htm')"><h4>დათვალიერება</h4></a>
                             </li>
 
@@ -391,7 +397,7 @@
                     <li>
                         <a href="#" onclick="requestRouter('plannedRoutesMainPage.htm')"><h3>გეგმიური</h3></a>
                     </li> 
-                
+
 
                 </ul>
 
